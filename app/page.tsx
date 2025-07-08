@@ -118,13 +118,13 @@ export default function Home() {
   return (
     <div className="container">
       <div className="header">
-        <h1>🤖 Amazon Bedrock LLM Selector</h1>
-        <p>Find the perfect AI model for your specific needs</p>
+        <h1>Bedrock</h1>
+        <p>Intelligent model selection for Amazon Bedrock</p>
       </div>
       
       <div className="main-content">
         <div className="form-section">
-          <h2>⚙️ Your Requirements</h2>
+          <h2>Requirements</h2>
           <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Task Type</label>
@@ -211,10 +211,10 @@ export default function Home() {
         </div>
         
         <div className="results-section">
-          <h2>🎯 Recommended Models</h2>
+          <h2>Recommendations</h2>
           {recommendations.length === 0 ? (
             <div className="empty-state">
-              Select your requirements to get personalized model recommendations
+              Configure your requirements to receive tailored model recommendations
             </div>
           ) : (
             recommendations.map((rec, index) => (
