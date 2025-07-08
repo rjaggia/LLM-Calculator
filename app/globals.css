@@ -8,10 +8,10 @@
 
 body {
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #000000;
-  color: #ffffff;
+  background: #f5f5f7;
+  color: #1d1d1f;
   min-height: 100vh;
-  line-height: 1.5;
+  line-height: 1.47059;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -19,31 +19,63 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 40px;
+  padding: 80px 40px;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .header h1 {
   font-size: 4rem;
   font-weight: 700;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  color: #1d1d1f;
+  letter-spacing: -0.022em;
 }
 
 .header p {
-  font-size: 1.25rem;
-  color: #a0a0a0;
+  font-size: 1.375rem;
+  color: #86868b;
   font-weight: 400;
   max-width: 600px;
   margin: 0 auto;
+  letter-spacing: -0.016em;
 }
 
 .main-content {
@@ -54,19 +86,19 @@ body {
 }
 
 .form-section {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  background: #ffffff;
+  border-radius: 18px;
   padding: 48px;
-  backdrop-filter: blur(40px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  animation: slideInLeft 0.8s ease-out 0.2s both;
 }
 
 .form-section h2 {
-  color: #ffffff;
+  color: #1d1d1f;
   margin-bottom: 40px;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.022em;
 }
 
 .form-group {
@@ -77,20 +109,20 @@ label {
   display: block;
   margin-bottom: 12px;
   font-weight: 500;
-  color: #ffffff;
-  font-size: 0.95rem;
-  letter-spacing: -0.005em;
+  color: #1d1d1f;
+  font-size: 1rem;
+  letter-spacing: -0.016em;
 }
 
 select, input {
   width: 100%;
   padding: 16px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid #d2d2d7;
   border-radius: 12px;
-  font-size: 16px;
-  transition: all 0.2s ease;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  font-size: 17px;
+  transition: all 0.15s ease;
+  background: #ffffff;
+  color: #1d1d1f;
   font-weight: 400;
   appearance: none;
   cursor: pointer;
@@ -98,37 +130,37 @@ select, input {
 
 select:focus, input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: #007aff;
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
 }
 
 select:hover, input:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: #a1a1a6;
 }
 
 select option {
-  background: #1a1a1a;
-  color: #ffffff;
+  background: #ffffff;
+  color: #1d1d1f;
 }
 
 button {
-  background: #ffffff;
-  color: #000000;
+  background: #007aff;
+  color: #ffffff;
   padding: 18px 32px;
   border: none;
   border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 500;
   cursor: pointer;
   width: 100%;
-  transition: all 0.2s ease;
-  letter-spacing: -0.005em;
+  transition: all 0.15s ease;
+  letter-spacing: -0.016em;
 }
 
 button:hover {
-  background: #f0f0f0;
+  background: #0056cc;
   transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(0, 122, 255, 0.25);
 }
 
 button:active {
@@ -136,151 +168,148 @@ button:active {
 }
 
 .results-section {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  background: #ffffff;
+  border-radius: 18px;
   padding: 48px;
-  backdrop-filter: blur(40px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   min-height: 600px;
+  animation: slideInRight 0.8s ease-out 0.4s both;
 }
 
 .results-section h2 {
-  color: #ffffff;
+  color: #1d1d1f;
   margin-bottom: 40px;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.022em;
 }
 
 .empty-state {
   text-align: center;
-  color: #666666;
+  color: #86868b;
   margin-top: 120px;
-  font-size: 1rem;
-  line-height: 1.6;
-  max-width: 300px;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  max-width: 320px;
   margin-left: auto;
   margin-right: auto;
+  letter-spacing: -0.016em;
 }
 
 .model-card {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #f5f5f7;
   border-radius: 16px;
   padding: 32px;
   margin-bottom: 24px;
-  background: rgba(255, 255, 255, 0.02);
-  transition: all 0.2s ease;
+  background: #fbfbfd;
+  transition: all 0.15s ease;
   position: relative;
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+.model-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.model-card:nth-child(3) {
+  animation-delay: 0.2s;
 }
 
 .model-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  border-color: #d2d2d7;
 }
 
 .model-name {
-  font-size: 1.25rem;
+  font-size: 1.375rem;
   font-weight: 600;
-  color: #ffffff;
+  color: #1d1d1f;
   margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.022em;
 }
 
 .model-reason {
-  color: #a0a0a0;
-  line-height: 1.6;
-  font-size: 0.95rem;
+  color: #515154;
+  line-height: 1.5;
+  font-size: 1rem;
   font-weight: 400;
+  letter-spacing: -0.016em;
 }
 
 .tag {
   display: inline-block;
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
   margin-left: 8px;
   margin-top: 4px;
-  border: 1px solid;
+  letter-spacing: -0.016em;
 }
 
 .tag.recommended {
-  background: rgba(52, 211, 153, 0.1);
-  color: #34d399;
-  border-color: rgba(52, 211, 153, 0.2);
+  background: #30d158;
+  color: #ffffff;
 }
 
 .tag.fast {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  border-color: rgba(59, 130, 246, 0.2);
+  background: #007aff;
+  color: #ffffff;
 }
 
 .tag.accurate {
-  background: rgba(168, 85, 247, 0.1);
-  color: #a855f7;
-  border-color: rgba(168, 85, 247, 0.2);
+  background: #af52de;
+  color: #ffffff;
 }
 
 .tag.large {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-  border-color: rgba(239, 68, 68, 0.2);
+  background: #ff3b30;
+  color: #ffffff;
 }
 
 .tag.small {
-  background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
-  border-color: rgba(245, 158, 11, 0.2);
+  background: #ff9500;
+  color: #ffffff;
 }
 
 .tag.efficient {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
-  border-color: rgba(16, 185, 129, 0.2);
+  background: #32d74b;
+  color: #ffffff;
 }
 
 .tag.balanced {
-  background: rgba(139, 92, 246, 0.1);
-  color: #8b5cf6;
-  border-color: rgba(139, 92, 246, 0.2);
+  background: #5856d6;
+  color: #ffffff;
 }
 
 .tag.context-aware {
-  background: rgba(236, 72, 153, 0.1);
-  color: #ec4899;
-  border-color: rgba(236, 72, 153, 0.2);
+  background: #ff2d92;
+  color: #ffffff;
 }
 
 .tag.specialized {
-  background: rgba(14, 165, 233, 0.1);
-  color: #0ea5e9;
-  border-color: rgba(14, 165, 233, 0.2);
+  background: #64d2ff;
+  color: #ffffff;
 }
 
 .tag.cost-effective {
-  background: rgba(34, 197, 94, 0.1);
-  color: #22c55e;
-  border-color: rgba(34, 197, 94, 0.2);
+  background: #30d158;
+  color: #ffffff;
 }
 
 .tag.open-source {
-  background: rgba(6, 182, 212, 0.1);
-  color: #06b6d4;
-  border-color: rgba(6, 182, 212, 0.2);
+  background: #5ac8fa;
+  color: #ffffff;
 }
 
 .tag.multilingual {
-  background: rgba(217, 70, 239, 0.1);
-  color: #d946ef;
-  border-color: rgba(217, 70, 239, 0.2);
+  background: #bf5af2;
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {

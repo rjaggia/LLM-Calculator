@@ -119,7 +119,7 @@ export default function Home() {
     <div className="container">
       <div className="header">
         <h1>Bedrock</h1>
-        <p>Intelligent model selection for Amazon Bedrock</p>
+        <p>The right model for the right task. Automatically.</p>
       </div>
       
       <div className="main-content">
