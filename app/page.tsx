@@ -20,15 +20,16 @@ interface ModelRecommendation {
 }
 
 const bedrockModels = {
-  'claude-3-opus': { size: 'large', speed: 'medium', accuracy: 'high', multimodal: true, cost: 'high' },
-  'claude-3-sonnet': { size: 'medium', speed: 'fast', accuracy: 'high', multimodal: true, cost: 'medium' },
-  'claude-3-haiku': { size: 'small', speed: 'very-fast', accuracy: 'medium', multimodal: true, cost: 'low' },
-  'titan-text-express': { size: 'medium', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
-  'titan-text-lite': { size: 'small', speed: 'very-fast', accuracy: 'medium', multimodal: false, cost: 'very-low' },
-  'llama2-70b': { size: 'large', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'medium' },
-  'llama2-13b': { size: 'medium', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
-  'cohere-command': { size: 'medium', speed: 'fast', accuracy: 'high', multimodal: false, cost: 'medium' },
-  'ai21-jurassic': { size: 'large', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'high' }
+  'llama2-7b-chat': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'llama2-13b-chat': { size: 'medium', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'medium' },
+  'llama2-70b-chat': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+  'code-llama-7b': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'code-llama-13b': { size: 'medium', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'medium' },
+  'code-llama-34b': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+  'falcon-7b-instruct': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'falcon-40b-instruct': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+  'mistral-7b-instruct': { size: 'small', speed: 'fast', accuracy: 'high', multimodal: false, cost: 'low' },
+  'mixtral-8x7b-instruct': { size: 'large', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'medium' }
 }
 
 export default function Home() {
@@ -54,58 +55,53 @@ export default function Home() {
   const getRecommendations = (data: FormData): ModelRecommendation[] => {
     const results: ModelRecommendation[] = []
     
-    // Multi-modal tasks
+    // Multi-modal tasks - Note: Current Hugging Face models on Bedrock are text-only
     if (data.taskType === 'multi-modal') {
-      if (data.speed === 'high') {
-        results.push({ name: 'Claude 3 Haiku', reason: 'Fast multi-modal processing with vision capabilities', tags: ['Fast', 'Multi-Modal'] })
-      } else if (data.accuracy === 'high') {
-        results.push({ name: 'Claude 3 Opus', reason: 'Highest accuracy for complex multi-modal tasks', tags: ['Accurate', 'Multi-Modal'] })
-      } else {
-        results.push({ name: 'Claude 3 Sonnet', reason: 'Balanced performance for multi-modal applications', tags: ['Recommended', 'Multi-Modal'] })
-      }
+      results.push({ name: 'Llama 2 70B Chat', reason: 'Best available text model for complex reasoning tasks (multi-modal capabilities coming soon)', tags: ['Accurate', 'Large'] })
+      results.push({ name: 'Mixtral 8x7B Instruct', reason: 'High-performance mixture of experts model for complex tasks', tags: ['Recommended', 'Efficient'] })
     }
     
     // Text generation
     else if (data.taskType === 'generation') {
       if (data.modelSize === 'small' && data.speed === 'high') {
-        results.push({ name: 'Titan Text Lite', reason: 'Lightweight and fast for simple text generation', tags: ['Fast', 'Small'] })
-        results.push({ name: 'Claude 3 Haiku', reason: 'Fast generation with better quality than Titan Lite', tags: ['Fast', 'Recommended'] })
+        results.push({ name: 'Mistral 7B Instruct', reason: 'Fast and efficient small model with excellent performance', tags: ['Fast', 'Small'] })
+        results.push({ name: 'Llama 2 7B Chat', reason: 'Lightweight option for quick text generation', tags: ['Fast', 'Recommended'] })
       } else if (data.accuracy === 'high') {
-        results.push({ name: 'Claude 3 Opus', reason: 'Superior text generation quality', tags: ['Accurate', 'Premium'] })
-        results.push({ name: 'Llama 2 70B', reason: 'Open-source option with high accuracy', tags: ['Accurate', 'Open-Source'] })
+        results.push({ name: 'Llama 2 70B Chat', reason: 'Highest accuracy for complex text generation', tags: ['Accurate', 'Large'] })
+        results.push({ name: 'Mixtral 8x7B Instruct', reason: 'Mixture of experts model with superior quality', tags: ['Accurate', 'Efficient'] })
       } else {
-        results.push({ name: 'Claude 3 Sonnet', reason: 'Good balance of speed and quality for text generation', tags: ['Recommended', 'Balanced'] })
+        results.push({ name: 'Llama 2 13B Chat', reason: 'Good balance of speed and quality for text generation', tags: ['Recommended', 'Balanced'] })
       }
     }
     
     // Summarization
     else if (data.taskType === 'summarization') {
-      results.push({ name: 'Claude 3 Sonnet', reason: 'Excellent at understanding context and creating concise summaries', tags: ['Recommended', 'Context-Aware'] })
-      results.push({ name: 'Cohere Command', reason: 'Specialized in text understanding and summarization tasks', tags: ['Specialized', 'NLP'] })
+      results.push({ name: 'Llama 2 13B Chat', reason: 'Excellent at understanding context and creating concise summaries', tags: ['Recommended', 'Context-Aware'] })
+      results.push({ name: 'Mistral 7B Instruct', reason: 'Efficient model specialized in text understanding tasks', tags: ['Specialized', 'Fast'] })
     }
     
     // Question-Answering
     else if (data.taskType === 'qa') {
       if (data.accuracy === 'high') {
-        results.push({ name: 'Claude 3 Opus', reason: 'Most accurate for complex question answering', tags: ['Accurate', 'Premium'] })
+        results.push({ name: 'Llama 2 70B Chat', reason: 'Most accurate for complex question answering', tags: ['Accurate', 'Large'] })
       } else {
-        results.push({ name: 'Claude 3 Sonnet', reason: 'Fast and accurate for most Q&A scenarios', tags: ['Recommended', 'Fast'] })
-        results.push({ name: 'Titan Text Express', reason: 'Cost-effective option for straightforward Q&A', tags: ['Cost-Effective', 'AWS'] })
+        results.push({ name: 'Mixtral 8x7B Instruct', reason: 'Fast and accurate for most Q&A scenarios', tags: ['Recommended', 'Fast'] })
+        results.push({ name: 'Llama 2 13B Chat', reason: 'Cost-effective option for straightforward Q&A', tags: ['Cost-Effective', 'Balanced'] })
       }
     }
     
     // Translation
     else if (data.taskType === 'translation') {
-      results.push({ name: 'Claude 3 Sonnet', reason: 'Strong multilingual capabilities', tags: ['Recommended', 'Multilingual'] })
-      results.push({ name: 'Claude 3 Opus', reason: 'Best for complex or nuanced translations', tags: ['Accurate', 'Premium'] })
+      results.push({ name: 'Llama 2 13B Chat', reason: 'Good multilingual capabilities for translation tasks', tags: ['Recommended', 'Multilingual'] })
+      results.push({ name: 'Mixtral 8x7B Instruct', reason: 'Strong performance for complex translations', tags: ['Accurate', 'Efficient'] })
     }
 
     // Filter by licensing preference
     if (data.licensing === 'open-source') {
-      const openSourceModels = results.filter(r => r.name.includes('Llama'))
+      const openSourceModels = results.filter(r => r.name.includes('Llama') || r.name.includes('Falcon') || r.name.includes('Mistral'))
       if (openSourceModels.length === 0) {
-        results.push({ name: 'Llama 2 70B', reason: 'Open-source model with commercial license', tags: ['Open-Source', 'Large'] })
-        results.push({ name: 'Llama 2 13B', reason: 'Smaller open-source option for faster inference', tags: ['Open-Source', 'Fast'] })
+        results.push({ name: 'Llama 2 70B Chat', reason: 'Open-source model with commercial license', tags: ['Open-Source', 'Large'] })
+        results.push({ name: 'Mistral 7B Instruct', reason: 'Apache 2.0 licensed model for commercial use', tags: ['Open-Source', 'Fast'] })
       }
     }
 
