@@ -117,8 +117,11 @@ export default function Home() {
 
   return (
     <div className="container">
+      <div className="beta-disclaimer">
+        <span>Beta</span>
+      </div>
       <div className="header">
-        <h1>Bedrock</h1>
+        <h1>Hugging Face Models on Bedrock</h1>
         <p>The right model for the right task. Automatically.</p>
       </div>
       
