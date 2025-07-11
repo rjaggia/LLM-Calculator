@@ -224,6 +224,20 @@ export default function Home() {
 
   return (
     <div className="container">
+      <header className="header-logos">
+        <div className="header-logos-container">
+          <div className="logo-item">
+            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" className="header-logo" />
+          </div>
+          <div className="connector">×</div>
+          <div className="logo-item">
+            <img src="/LLM-Calculator/bedrock-logo.png" alt="Amazon Bedrock" className="header-logo" />
+          </div>
+        </div>
+        <div className="header-text">
+          <span>Hugging Face</span> <span>Amazon Bedrock</span>
+        </div>
+      </header>
       <div className="author-card">
         <div className="author-photo">
           <img src="/LLM-Calculator/photo.jpg" alt="Raghav Jaggia" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/48x48/007aff/ffffff?text=RJ' }} />
@@ -349,19 +363,6 @@ export default function Home() {
           )}
         </div>
       </div>
-      
-      <footer className="footer">
-        <div className="footer-logos">
-          <div className="logo-item">
-            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" className="footer-logo" />
-          </div>
-          <div className="connector">×</div>
-          <div className="logo-item">
-            <img src="/LLM-Calculator/bedrock-logo.png" alt="Amazon Bedrock" className="footer-logo" />
-          </div>
-        </div>
-        <div className="footer-text">Powered by Hugging Face models on Amazon Bedrock</div>
-      </footer>
     </div>
   )
 }
