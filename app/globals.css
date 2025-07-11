@@ -254,54 +254,42 @@ body {
   letter-spacing: 0.5px;
 }
 
-.logos-section {
+.footer {
+  margin-top: 80px;
+  padding: 40px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   text-align: center;
-  margin-bottom: 50px;
-  animation: fadeInUp 1s ease-out 0.5s both;
 }
 
-.logos-container {
+.footer-logos {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 32px;
-  padding: 20px 32px;
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  border-radius: 16px;
-  backdrop-filter: blur(20px);
-  max-width: 500px;
-  margin: 0 auto;
+  gap: 24px;
+  margin-bottom: 16px;
 }
 
-.logo-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.logo {
-  height: 32px;
+.footer-logo {
+  height: 24px;
   width: auto;
-  filter: grayscale(20%) opacity(0.8);
+  filter: grayscale(40%) opacity(0.7);
   transition: all 0.3s ease;
 }
 
-.logo:hover {
+.footer-logo:hover {
   filter: grayscale(0%) opacity(1);
   transform: scale(1.05);
 }
 
-.logo-text {
-  font-size: 0.75rem;
+.footer-text {
+  font-size: 0.8rem;
   color: #86868b;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: -0.012em;
 }
 
 .connector {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: #d1d5db;
   font-weight: 300;
 }
@@ -629,22 +617,25 @@ button:active {
     font-size: 0.75rem;
   }
   
-  .logos-container {
-    gap: 20px;
-    padding: 16px 20px;
-    margin: 0 20px;
+  .footer {
+    margin-top: 60px;
+    padding: 30px 20px;
   }
   
-  .logo {
-    height: 28px;
+  .footer-logos {
+    gap: 16px;
   }
   
-  .logo-text {
-    font-size: 0.7rem;
+  .footer-logo {
+    height: 20px;
+  }
+  
+  .footer-text {
+    font-size: 0.75rem;
   }
   
   .connector {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   
   .bedrock-logo {

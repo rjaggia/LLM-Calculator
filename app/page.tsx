@@ -264,19 +264,7 @@ export default function Home() {
         </div>
       </div>
       
-      <div className="logos-section">
-        <div className="logos-container">
-          <div className="logo-item">
-            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" className="logo" />
-            <span className="logo-text">Hugging Face</span>
-          </div>
-          <div className="connector">×</div>
-          <div className="logo-item">
-            <img src="/LLM-Calculator/bedrock-logo.png" alt="Amazon Bedrock" className="logo" />
-            <span className="logo-text">Amazon Bedrock</span>
-          </div>
-        </div>
-      </div>
+
       
       <div className="main-content">
         <div className="form-section">
@@ -361,6 +349,19 @@ export default function Home() {
           )}
         </div>
       </div>
+      
+      <footer className="footer">
+        <div className="footer-logos">
+          <div className="logo-item">
+            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" className="footer-logo" />
+          </div>
+          <div className="connector">×</div>
+          <div className="logo-item">
+            <img src="/LLM-Calculator/bedrock-logo.png" alt="Amazon Bedrock" className="footer-logo" />
+          </div>
+        </div>
+        <div className="footer-text">Powered by Hugging Face models on Amazon Bedrock</div>
+      </footer>
     </div>
   )
 }
