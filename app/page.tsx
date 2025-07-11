@@ -272,7 +272,10 @@ export default function Home() {
           </div>
           <div className="connector">×</div>
           <div className="logo-item">
-            <img src="https://d2908q01vomqb2.cloudfront.net/77de68daecd823babbb58edb1c8e14d7106e83bb/2023/06/22/bedrock-logo-1.png" alt="Amazon Bedrock" className="logo" />
+            <div className="bedrock-logo">
+              <span className="aws-text">AWS</span>
+              <span className="bedrock-text">Bedrock</span>
+            </div>
             <span className="logo-text">Amazon Bedrock</span>
           </div>
         </div>

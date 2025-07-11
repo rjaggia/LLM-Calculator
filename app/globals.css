@@ -306,6 +306,36 @@ body {
   font-weight: 300;
 }
 
+.bedrock-logo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #ff9900 0%, #ff6600 100%);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.bedrock-logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
+}
+
+.aws-text {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.bedrock-text {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
 .main-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -620,5 +650,14 @@ button:active {
   
   .connector {
     font-size: 1rem;
+  }
+  
+  .bedrock-logo {
+    height: 28px;
+    padding: 4px 10px;
+  }
+  
+  .aws-text, .bedrock-text {
+    font-size: 0.7rem;
   }
 }
