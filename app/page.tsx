@@ -226,7 +226,7 @@ export default function Home() {
     <div className="container">
       <div className="author-card">
         <div className="author-photo">
-          <img src="https://via.placeholder.com/48x48/007aff/ffffff?text=RJ" alt="Raghav Jaggia" />
+          <img src="/photo.jpg" alt="Raghav Jaggia" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/48x48/007aff/ffffff?text=RJ' }} />
         </div>
         <div className="author-info">
           <div className="author-name">Raghav Jaggia</div>
