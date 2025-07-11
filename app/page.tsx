@@ -8,9 +8,6 @@ interface FormData {
   speed: string
   dataPrivacy: string
   modelSize: string
-  fineTuning: string
-  deployment: string
-  licensing: string
 }
 
 interface ModelRecommendation {
@@ -158,10 +155,7 @@ export default function Home() {
     accuracy: '',
     speed: '',
     dataPrivacy: '',
-    modelSize: '',
-    fineTuning: '',
-    deployment: '',
-    licensing: ''
+    modelSize: ''
   })
   
   const [recommendations, setRecommendations] = useState<ModelRecommendation[]>([])
@@ -216,18 +210,7 @@ export default function Home() {
       results.push({ name: 'BLOOMZ 7B1', reason: 'Multilingual model trained on diverse languages', tags: ['Multilingual', 'Efficient'] })
     }
 
-    // Filter by licensing preference
-    if (data.licensing === 'open-source') {
-      const openSourceModels = results.filter(r => 
-        r.name.includes('Falcon') || r.name.includes('Mistral') || 
-        r.name.includes('Gemma') || r.name.includes('Qwen') ||
-        r.name.includes('Phi') || r.name.includes('Yi')
-      )
-      if (openSourceModels.length === 0) {
-        results.push({ name: 'Falcon 180B BF16', reason: 'Large open-source model with commercial license', tags: ['Open-Source', 'Large'] })
-        results.push({ name: 'Mistral 7B OpenOrca', reason: 'Apache 2.0 licensed model for commercial use', tags: ['Open-Source', 'Fast'] })
-      }
-    }
+
 
     // Add privacy considerations
     if (data.dataPrivacy === 'high') {
@@ -305,33 +288,7 @@ export default function Home() {
           </select>
         </div>
 
-        <div className="form-group">
-          <label>Fine-Tuning Required</label>
-          <select value={formData.fineTuning} onChange={(e) => setFormData({...formData, fineTuning: e.target.value})}>
-            <option value="">Select fine-tuning need</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div>
 
-        <div className="form-group">
-          <label>Deployment Environment</label>
-          <select value={formData.deployment} onChange={(e) => setFormData({...formData, deployment: e.target.value})}>
-            <option value="">Select deployment</option>
-            <option value="cloud">Cloud (AWS)</option>
-            <option value="hybrid">Hybrid</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>Licensing Preference</label>
-          <select value={formData.licensing} onChange={(e) => setFormData({...formData, licensing: e.target.value})}>
-            <option value="">Select licensing</option>
-            <option value="proprietary">Proprietary (Best Performance)</option>
-            <option value="open-source">Open Source</option>
-            <option value="either">No Preference</option>
-          </select>
-        </div>
 
             <button type="submit">Get Recommendations</button>
           </form>
