@@ -245,7 +245,7 @@ export default function Home() {
       <div className="about-section">
         <div className="about-content">
           <h3>About This Calculator</h3>
-          <p>This tool helps you discover the optimal Hugging Face model on Amazon Bedrock based on your specific requirements. Simply select your task type, performance priorities, and constraints to receive personalized recommendations from our comprehensive catalog of 130+ models.</p>
+          <p>This tool helps you discover the optimal Hugging Face model on Amazon Bedrock based on your specific requirements. Simply select your task type, performance priorities, and constraints to receive personalized recommendations from our comprehensive catalog of 100+ models.</p>
         </div>
       </div>
       
