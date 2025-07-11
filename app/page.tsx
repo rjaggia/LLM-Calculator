@@ -20,17 +20,137 @@ interface ModelRecommendation {
 }
 
 const bedrockModels = {
-  'llama2-7b-chat': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
-  'llama2-13b-chat': { size: 'medium', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'medium' },
-  'llama2-70b-chat': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
-  'code-llama-7b': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
-  'code-llama-13b': { size: 'medium', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'medium' },
-  'code-llama-34b': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
-  'falcon-7b-instruct': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
-  'falcon-40b-instruct': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
-  'mistral-7b-instruct': { size: 'small', speed: 'fast', accuracy: 'high', multimodal: false, cost: 'low' },
-  'mixtral-8x7b-instruct': { size: 'large', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'medium' }
+  // Bart Models
+  'bart-large-cnn-samsum': { size: 'medium', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'medium' },
+
+  // Bloom Models
+  'bloom-560m': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'bloom-1b1': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'bloom-1b7': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'bloom-3b': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'bloom-7b1': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'bloomz-1b1': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'bloomz-1b7': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'bloomz-3b': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'bloomz-7b1': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+
+  // CyberAgent Models
+  'cyberagentlm3-22b-chat': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+
+  // DBRX Models
+  'dbrx-base': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'dbrx-instruct': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+
+  // Distilbart Models
+  'distilbart-cnn-6-6': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'distilbart-cnn-12-6': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'distilbart-xsum-12-3': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+
+  // Distil GPT Models
+  'distilgpt-2': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+
+  // Dolly Models
+  'dolly-v2-3b': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'dolly-v2-7b': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'dolly-v2-12b': { size: 'medium', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'medium' },
+
+  // Dolphin Models
+  'dolphin-2.2.1-mistral-7b': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'dolphin-2.5-mixtral-8-7b': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+
+  // Falcon Models
+  'falcon-40b-bf16': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+  'falcon-180b-bf16': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+  'falcon-lite': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'falcon-lite-2': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'falcon-rw-1b': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'falcon3-1b-instruct': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'falcon3-3b-base': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'falcon3-3b-instruct': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'falcon3-7b-base': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'falcon3-7b-instruct': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'falcon3-10b-base': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'falcon3-10b-instruct': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+
+  // Flan-T5 Models
+  'flan-t5-base': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'flan-t5-base-samsum': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'flan-t5-large': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'flan-t5-small': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+
+  // Gemma Models
+  'gemma-2b': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'gemma-2b-instruct': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'gemma-2-9b': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'gemma-2-9b-instruct': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'gemma-2-27b': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+  'gemma-2-27b-instruct': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+  'gemma-3-4b-instruct': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'gemma-3-27b-instruct': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+  'gemma-7b': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'gemma-7b-instruct': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+
+  // GPT Models
+  'gpt-2': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'gpt-2-xl': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'gpt-j-6b': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'gpt-neo-125m': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'gpt-neo-1.3b': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'gpt-neo-2.7b': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'gpt-neox-20b': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+
+  // Mistral Models
+  'mistral-7b-openorca': { size: 'small', speed: 'fast', accuracy: 'high', multimodal: false, cost: 'low' },
+  'mistral-7b-openorca-gptq': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'mistral-7b-sft-alpha': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'mistral-7b-sft-beta': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'mistral-lite': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'mistral-trix-v1': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+
+  // MPT Models
+  'mpt-7b': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'mpt-7b-instruct': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'mpt-7b-storywriter': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+
+  // Open Hermes Models
+  'open-hermes-2-mistral-7b': { size: 'small', speed: 'fast', accuracy: 'high', multimodal: false, cost: 'low' },
+
+  // Phi Models
+  'phi-2': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'phi-3-mini-4k': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'phi-3-mini-128k': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'phi-3.5-mini': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+
+  // Qwen Models
+  'qwen2.5-7b': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'qwen2.5-14b': { size: 'medium', speed: 'medium', accuracy: 'high', multimodal: false, cost: 'medium' },
+  'qwen2.5-32b': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+  'qwen2.5-72b': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+  'qwen3-0.6b': { size: 'small', speed: 'fast', accuracy: 'low', multimodal: false, cost: 'low' },
+  'qwen3-4b': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'qwen3-8b': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'qwen3-32b': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+
+  // Whisper Models
+  'whisper-large-v3-turbo': { size: 'large', speed: 'medium', accuracy: 'high', multimodal: true, cost: 'high' },
+
+  // Writer Models
+  'writer-palmyra-small': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+
+  // Yarn Models
+  'yarn-mistral-7b-128k': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+
+  // Yi Models
+  'yi-1.5-6b': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' },
+  'yi-1.5-9b': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'yi-1.5-34b': { size: 'large', speed: 'slow', accuracy: 'high', multimodal: false, cost: 'high' },
+
+  // Zephyr Models
+  'zephyr-7b-alpha': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'zephyr-7b-beta': { size: 'medium', speed: 'medium', accuracy: 'medium', multimodal: false, cost: 'medium' },
+  'zephyr-7b-gemma': { size: 'small', speed: 'fast', accuracy: 'medium', multimodal: false, cost: 'low' }
 }
+
 
 export default function Home() {
   const [formData, setFormData] = useState<FormData>({
