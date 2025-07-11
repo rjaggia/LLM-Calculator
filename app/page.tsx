@@ -264,6 +264,20 @@ export default function Home() {
         </div>
       </div>
       
+      <div className="logos-section">
+        <div className="logos-container">
+          <div className="logo-item">
+            <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" className="logo" />
+            <span className="logo-text">Hugging Face</span>
+          </div>
+          <div className="connector">×</div>
+          <div className="logo-item">
+            <img src="https://d2908q01vomqb2.cloudfront.net/77de68daecd823babbb58edb1c8e14d7106e83bb/2023/06/22/bedrock-logo-1.png" alt="Amazon Bedrock" className="logo" />
+            <span className="logo-text">Amazon Bedrock</span>
+          </div>
+        </div>
+      </div>
+      
       <div className="main-content">
         <div className="form-section">
           <h2>Requirements</h2>

@@ -254,6 +254,58 @@ body {
   letter-spacing: 0.5px;
 }
 
+.logos-section {
+  text-align: center;
+  margin-bottom: 50px;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.logos-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 20px 32px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.logo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+  filter: grayscale(20%) opacity(0.8);
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  filter: grayscale(0%) opacity(1);
+  transform: scale(1.05);
+}
+
+.logo-text {
+  font-size: 0.75rem;
+  color: #86868b;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+}
+
+.connector {
+  font-size: 1.25rem;
+  color: #d1d5db;
+  font-weight: 300;
+}
+
 .main-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -550,5 +602,23 @@ button:active {
   
   .stat-label {
     font-size: 0.75rem;
+  }
+  
+  .logos-container {
+    gap: 20px;
+    padding: 16px 20px;
+    margin: 0 20px;
+  }
+  
+  .logo {
+    height: 28px;
+  }
+  
+  .logo-text {
+    font-size: 0.7rem;
+  }
+  
+  .connector {
+    font-size: 1rem;
   }
 }
