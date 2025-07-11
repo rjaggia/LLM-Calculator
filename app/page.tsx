@@ -225,9 +225,14 @@ export default function Home() {
   return (
     <div className="container">
       <div className="author-card">
-        <div className="author-name">Raghav Jaggia</div>
-        <div className="author-title">Partner Development Manager (PDM), Hugging Face</div>
-        <div className="author-email">jaggiar@amazon.com</div>
+        <div className="author-photo">
+          <img src="https://via.placeholder.com/48x48/007aff/ffffff?text=RJ" alt="Raghav Jaggia" />
+        </div>
+        <div className="author-info">
+          <div className="author-name">Raghav Jaggia</div>
+          <div className="author-title">Partner Development Manager (PDM), Hugging Face</div>
+          <div className="author-email">jaggiar@amazon.com</div>
+        </div>
       </div>
       <div className="beta-disclaimer">
         <span>Beta</span>
