@@ -244,8 +244,23 @@ export default function Home() {
       
       <div className="about-section">
         <div className="about-content">
-          <h3>About This Calculator</h3>
-          <p>This tool helps you discover the optimal Hugging Face model on Amazon Bedrock based on your specific requirements. Simply select your task type, performance priorities, and constraints to receive personalized recommendations from our comprehensive catalog of 100+ models.</p>
+          <div className="about-icon">🧠</div>
+          <h3>Intelligent Model Selection</h3>
+          <p>Powered by advanced matching algorithms, this tool analyzes your specific requirements across <strong>100+ Hugging Face models</strong> on Amazon Bedrock. Get instant, data-driven recommendations tailored to your exact use case.</p>
+          <div className="about-stats">
+            <div className="stat">
+              <span className="stat-number">100+</span>
+              <span className="stat-label">Models</span>
+            </div>
+            <div className="stat">
+              <span className="stat-number">5</span>
+              <span className="stat-label">Task Types</span>
+            </div>
+            <div className="stat">
+              <span className="stat-number">∞</span>
+              <span className="stat-label">Possibilities</span>
+            </div>
+          </div>
         </div>
       </div>
       
