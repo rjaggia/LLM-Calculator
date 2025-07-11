@@ -20,6 +20,44 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 80px 40px;
+  position: relative;
+}
+
+.author-card {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  animation: fadeInUp 1s ease-out 0.5s both;
+  z-index: 10;
+}
+
+.author-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 4px;
+  letter-spacing: -0.016em;
+}
+
+.author-title {
+  font-size: 0.8rem;
+  color: #86868b;
+  margin-bottom: 6px;
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+}
+
+.author-email {
+  font-size: 0.75rem;
+  color: #007aff;
+  font-weight: 500;
+  letter-spacing: -0.012em;
 }
 
 .beta-disclaimer {
@@ -346,5 +384,12 @@ button:active {
   
   .container {
     padding: 40px 20px;
+  }
+  
+  .author-card {
+    position: static;
+    margin: 0 auto 20px auto;
+    max-width: 280px;
+    text-align: center;
   }
 }
