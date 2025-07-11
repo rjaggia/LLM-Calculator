@@ -272,7 +272,7 @@ export default function Home() {
           </div>
           <div className="connector">×</div>
           <div className="logo-item">
-            <img src="https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png" alt="Amazon Bedrock" className="logo bedrock-logo" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling.style.display = 'block'; }} />
+            <img src="https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png" alt="Amazon Bedrock" className="logo bedrock-logo" onError={(e) => { const target = e.currentTarget; const sibling = target.nextElementSibling as HTMLElement; target.style.display = 'none'; if (sibling) sibling.style.display = 'block'; }} />
             <div className="bedrock-fallback" style={{display: 'none'}}>
               <div className="bedrock-icon">🪨</div>
               <span className="bedrock-name">Amazon Bedrock</span>
