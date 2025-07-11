@@ -160,6 +160,38 @@ body {
   letter-spacing: -0.016em;
 }
 
+.about-section {
+  text-align: center;
+  margin-bottom: 60px;
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.about-content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+}
+
+.about-content h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 12px;
+  letter-spacing: -0.016em;
+}
+
+.about-content p {
+  font-size: 0.95rem;
+  color: #515154;
+  line-height: 1.6;
+  letter-spacing: -0.016em;
+  font-weight: 400;
+}
+
 .main-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -427,5 +459,18 @@ button:active {
   
   .author-email {
     font-size: 0.65rem;
+  }
+  
+  .about-content {
+    padding: 20px 24px;
+    margin: 0 20px;
+  }
+  
+  .about-content h3 {
+    font-size: 1rem;
+  }
+  
+  .about-content p {
+    font-size: 0.9rem;
   }
 }

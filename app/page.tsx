@@ -242,6 +242,13 @@ export default function Home() {
         <p>The right model for the right task. Automatically.</p>
       </div>
       
+      <div className="about-section">
+        <div className="about-content">
+          <h3>About This Calculator</h3>
+          <p>This tool helps you discover the optimal Hugging Face model on Amazon Bedrock based on your specific requirements. Simply select your task type, performance priorities, and constraints to receive personalized recommendations from our comprehensive catalog of 130+ models.</p>
+        </div>
+      </div>
+      
       <div className="main-content">
         <div className="form-section">
           <h2>Requirements</h2>
