@@ -175,53 +175,57 @@ export default function Home() {
   const getRecommendations = (data: FormData): ModelRecommendation[] => {
     const results: ModelRecommendation[] = []
     
-    // Multi-modal tasks - Note: Current Hugging Face models on Bedrock are text-only
+    // Multi-modal tasks
     if (data.taskType === 'multi-modal') {
-      results.push({ name: 'Llama 2 70B Chat', reason: 'Best available text model for complex reasoning tasks (multi-modal capabilities coming soon)', tags: ['Accurate', 'Large'] })
-      results.push({ name: 'Mixtral 8x7B Instruct', reason: 'High-performance mixture of experts model for complex tasks', tags: ['Recommended', 'Efficient'] })
+      results.push({ name: 'Whisper Large V3 Turbo', reason: 'Advanced audio processing model with speech recognition capabilities', tags: ['Multi-Modal', 'Audio'] })
+      results.push({ name: 'Qwen 2.5 72B', reason: 'Large model with strong reasoning for complex multi-modal tasks', tags: ['Large', 'Accurate'] })
     }
     
     // Text generation
     else if (data.taskType === 'generation') {
       if (data.modelSize === 'small' && data.speed === 'high') {
-        results.push({ name: 'Mistral 7B Instruct', reason: 'Fast and efficient small model with excellent performance', tags: ['Fast', 'Small'] })
-        results.push({ name: 'Llama 2 7B Chat', reason: 'Lightweight option for quick text generation', tags: ['Fast', 'Recommended'] })
+        results.push({ name: 'Phi 3.5 Mini', reason: 'Ultra-fast small model optimized for quick text generation', tags: ['Fast', 'Small'] })
+        results.push({ name: 'Mistral Lite', reason: 'Lightweight Mistral variant for rapid generation', tags: ['Fast', 'Efficient'] })
       } else if (data.accuracy === 'high') {
-        results.push({ name: 'Llama 2 70B Chat', reason: 'Highest accuracy for complex text generation', tags: ['Accurate', 'Large'] })
-        results.push({ name: 'Mixtral 8x7B Instruct', reason: 'Mixture of experts model with superior quality', tags: ['Accurate', 'Efficient'] })
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Highest accuracy for complex text generation tasks', tags: ['Accurate', 'Large'] })
+        results.push({ name: 'Gemma 2 27B Instruct', reason: 'Google\'s large instruction-tuned model', tags: ['Accurate', 'Premium'] })
       } else {
-        results.push({ name: 'Llama 2 13B Chat', reason: 'Good balance of speed and quality for text generation', tags: ['Recommended', 'Balanced'] })
+        results.push({ name: 'Gemma 7B Instruct', reason: 'Balanced performance for general text generation', tags: ['Recommended', 'Balanced'] })
       }
     }
     
     // Summarization
     else if (data.taskType === 'summarization') {
-      results.push({ name: 'Llama 2 13B Chat', reason: 'Excellent at understanding context and creating concise summaries', tags: ['Recommended', 'Context-Aware'] })
-      results.push({ name: 'Mistral 7B Instruct', reason: 'Efficient model specialized in text understanding tasks', tags: ['Specialized', 'Fast'] })
+      results.push({ name: 'BART Large CNN SamSum', reason: 'Specialized summarization model trained on conversation data', tags: ['Specialized', 'Summarization'] })
+      results.push({ name: 'DistilBART CNN 12-6', reason: 'Efficient distilled model for news summarization', tags: ['Fast', 'Efficient'] })
     }
     
     // Question-Answering
     else if (data.taskType === 'qa') {
       if (data.accuracy === 'high') {
-        results.push({ name: 'Llama 2 70B Chat', reason: 'Most accurate for complex question answering', tags: ['Accurate', 'Large'] })
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Most accurate for complex question answering', tags: ['Accurate', 'Large'] })
       } else {
-        results.push({ name: 'Mixtral 8x7B Instruct', reason: 'Fast and accurate for most Q&A scenarios', tags: ['Recommended', 'Fast'] })
-        results.push({ name: 'Llama 2 13B Chat', reason: 'Cost-effective option for straightforward Q&A', tags: ['Cost-Effective', 'Balanced'] })
+        results.push({ name: 'Open Hermes 2 Mistral 7B', reason: 'Fine-tuned for instruction following and Q&A', tags: ['Recommended', 'Instruct'] })
+        results.push({ name: 'Dolly V2 12B', reason: 'Cost-effective option for straightforward Q&A', tags: ['Cost-Effective', 'Balanced'] })
       }
     }
     
     // Translation
     else if (data.taskType === 'translation') {
-      results.push({ name: 'Llama 2 13B Chat', reason: 'Good multilingual capabilities for translation tasks', tags: ['Recommended', 'Multilingual'] })
-      results.push({ name: 'Mixtral 8x7B Instruct', reason: 'Strong performance for complex translations', tags: ['Accurate', 'Efficient'] })
+      results.push({ name: 'Qwen 2.5 32B', reason: 'Strong multilingual capabilities for translation tasks', tags: ['Multilingual', 'Large'] })
+      results.push({ name: 'BLOOMZ 7B1', reason: 'Multilingual model trained on diverse languages', tags: ['Multilingual', 'Efficient'] })
     }
 
     // Filter by licensing preference
     if (data.licensing === 'open-source') {
-      const openSourceModels = results.filter(r => r.name.includes('Llama') || r.name.includes('Falcon') || r.name.includes('Mistral'))
+      const openSourceModels = results.filter(r => 
+        r.name.includes('Falcon') || r.name.includes('Mistral') || 
+        r.name.includes('Gemma') || r.name.includes('Qwen') ||
+        r.name.includes('Phi') || r.name.includes('Yi')
+      )
       if (openSourceModels.length === 0) {
-        results.push({ name: 'Llama 2 70B Chat', reason: 'Open-source model with commercial license', tags: ['Open-Source', 'Large'] })
-        results.push({ name: 'Mistral 7B Instruct', reason: 'Apache 2.0 licensed model for commercial use', tags: ['Open-Source', 'Fast'] })
+        results.push({ name: 'Falcon 180B BF16', reason: 'Large open-source model with commercial license', tags: ['Open-Source', 'Large'] })
+        results.push({ name: 'Mistral 7B OpenOrca', reason: 'Apache 2.0 licensed model for commercial use', tags: ['Open-Source', 'Fast'] })
       }
     }
 
