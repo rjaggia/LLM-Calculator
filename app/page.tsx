@@ -272,11 +272,12 @@ export default function Home() {
           </div>
           <div className="connector">×</div>
           <div className="logo-item">
-            <div className="bedrock-logo-text">
-              <span className="amazon-text">Amazon</span>
-              <span className="bedrock-text">Bedrock</span>
+            <img src="https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png" alt="Amazon Bedrock" className="logo bedrock-logo" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling.style.display = 'block'; }} />
+            <div className="bedrock-fallback" style={{display: 'none'}}>
+              <div className="bedrock-icon">🪨</div>
+              <span className="bedrock-name">Amazon Bedrock</span>
             </div>
-            <span className="logo-text">Foundation Models</span>
+            <span className="logo-text">Amazon Bedrock</span>
           </div>
         </div>
       </div>
