@@ -239,16 +239,20 @@ export default function Home() {
         <span>Beta</span>
       </div>
       <div className="header">
-        <div className="header-compact">
-          <h1>HF Models on Bedrock</h1>
-          <div className="header-logos">
+        <h1>Hugging Face Models on Bedrock</h1>
+        <div className="brand-logos">
+          <div className="logo-item">
             <a href="https://huggingface.co" target="_blank" rel="noopener noreferrer">
-              <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" className="header-logo" />
+              <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" className="brand-logo" />
             </a>
-            <span className="connector">×</span>
+            <span className="logo-label">Hugging Face</span>
+          </div>
+          <span className="connector">×</span>
+          <div className="logo-item">
             <a href="https://huggingface.co/amazon" target="_blank" rel="noopener noreferrer">
-              <img src="/LLM-Calculator/bedrock-logo.png" alt="Amazon Bedrock" className="header-logo" />
+              <img src="/LLM-Calculator/bedrock-logo.png" alt="Amazon Bedrock" className="brand-logo" />
             </a>
+            <span className="logo-label">Amazon Bedrock</span>
           </div>
         </div>
         <p>The right model for the right task. Automatically.</p>
