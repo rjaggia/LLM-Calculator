@@ -239,19 +239,16 @@ export default function Home() {
         <span>Beta</span>
       </div>
       <div className="header">
-        <h1>Hugging Face Models on Bedrock</h1>
-        <div className="title-logos">
-          <div className="title-logos-container">
-            <div className="logo-item">
-              <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" className="title-logo" />
-            </div>
-            <div className="connector">×</div>
-            <div className="logo-item">
-              <img src="/LLM-Calculator/bedrock-logo.png" alt="Amazon Bedrock" className="title-logo" />
-            </div>
-          </div>
-          <div className="title-text">
-            <span>Hugging Face</span> <span>Amazon Bedrock</span>
+        <div className="header-compact">
+          <h1>HF Models on Bedrock</h1>
+          <div className="header-logos">
+            <a href="https://huggingface.co" target="_blank" rel="noopener noreferrer">
+              <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" className="header-logo" />
+            </a>
+            <span className="connector">×</span>
+            <a href="https://huggingface.co/amazon" target="_blank" rel="noopener noreferrer">
+              <img src="/LLM-Calculator/bedrock-logo.png" alt="Amazon Bedrock" className="header-logo" />
+            </a>
           </div>
         </div>
         <p>The right model for the right task. Automatically.</p>
@@ -353,7 +350,9 @@ export default function Home() {
             recommendations.map((rec, index) => (
               <div key={index} className="model-card">
                 <div className="model-name">
-                  {rec.name}
+                  <a href={`https://huggingface.co/models?search=${encodeURIComponent(rec.name)}`} target="_blank" rel="noopener noreferrer" className="model-link">
+                    {rec.name}
+                  </a>
                   {rec.tags.map((tag, i) => (
                     <span key={i} className={`tag ${tag.toLowerCase()}`}>{tag}</span>
                   ))}
