@@ -260,7 +260,6 @@ export default function Home() {
       
       <div className="about-section">
         <div className="about-content">
-          <div className="about-icon">🧠</div>
           <h3>Intelligent Model Selection</h3>
           <p>Powered by advanced matching algorithms, this tool analyzes your specific requirements across <strong>100+ Hugging Face models</strong> on Amazon Bedrock. Get instant, data-driven recommendations tailored to your exact use case.</p>
           <div className="about-stats">
