@@ -172,7 +172,12 @@ export default function Home() {
     // Multi-modal tasks
     if (data.taskType === 'multi-modal') {
       results.push({ name: 'Whisper Large V3 Turbo', reason: 'Advanced audio processing model with speech recognition capabilities', tags: ['Multi-Modal', 'Audio'] })
-      results.push({ name: 'Qwen 2.5 72B', reason: 'Large model with strong reasoning for complex multi-modal tasks', tags: ['Large', 'Accurate'] })
+      if (data.accuracy === 'high') {
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Large model with strong reasoning for complex multi-modal tasks', tags: ['Large', 'Accurate'] })
+        results.push({ name: 'Gemma 2 27B Instruct', reason: 'Large instruction-tuned model for complex tasks', tags: ['Large', 'Accurate'] })
+      } else {
+        results.push({ name: 'Qwen 2.5 14B', reason: 'Medium-sized model with good multi-modal performance', tags: ['Balanced', 'Efficient'] })
+      }
     }
     
     // Text generation
@@ -180,11 +185,15 @@ export default function Home() {
       if (data.modelSize === 'small' && data.speed === 'high') {
         results.push({ name: 'Phi 3.5 Mini', reason: 'Ultra-fast small model optimized for quick text generation', tags: ['Fast', 'Small'] })
         results.push({ name: 'Mistral Lite', reason: 'Lightweight Mistral variant for rapid generation', tags: ['Fast', 'Efficient'] })
-      } else if (data.accuracy === 'high') {
+        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact Google model for fast generation', tags: ['Fast', 'Small'] })
+      } else if (data.modelSize === 'large' || data.accuracy === 'high') {
         results.push({ name: 'Qwen 2.5 72B', reason: 'Highest accuracy for complex text generation tasks', tags: ['Accurate', 'Large'] })
-        results.push({ name: 'Gemma 2 27B Instruct', reason: 'Google\'s large instruction-tuned model', tags: ['Accurate', 'Premium'] })
+        results.push({ name: 'Falcon 180B BF16', reason: 'Massive model for highest quality generation', tags: ['Large', 'Premium'] })
+        results.push({ name: 'CyberAgentLM3 22B Chat', reason: 'Large conversational model with strong generation', tags: ['Large', 'Chat'] })
       } else {
         results.push({ name: 'Gemma 7B Instruct', reason: 'Balanced performance for general text generation', tags: ['Recommended', 'Balanced'] })
+        results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality 7B model with strong instruction following', tags: ['Balanced', 'Instruct'] })
+        results.push({ name: 'Qwen 2.5 7B', reason: 'Efficient model with good generation quality', tags: ['Balanced', 'Efficient'] })
       }
     }
     
@@ -192,15 +201,25 @@ export default function Home() {
     else if (data.taskType === 'summarization') {
       results.push({ name: 'BART Large CNN SamSum', reason: 'Specialized summarization model trained on conversation data', tags: ['Specialized', 'Summarization'] })
       results.push({ name: 'DistilBART CNN 12-6', reason: 'Efficient distilled model for news summarization', tags: ['Fast', 'Efficient'] })
+      if (data.speed === 'high') {
+        results.push({ name: 'DistilBART CNN 6-6', reason: 'Fastest summarization model for quick processing', tags: ['Fast', 'Small'] })
+      } else {
+        results.push({ name: 'Flan-T5 Large', reason: 'Instruction-tuned model good for summarization', tags: ['Balanced', 'Instruct'] })
+      }
     }
     
     // Question-Answering
     else if (data.taskType === 'qa') {
       if (data.accuracy === 'high') {
         results.push({ name: 'Qwen 2.5 72B', reason: 'Most accurate for complex question answering', tags: ['Accurate', 'Large'] })
+        results.push({ name: 'Yi 1.5 34B', reason: 'Large model with strong reasoning capabilities', tags: ['Accurate', 'Large'] })
+      } else if (data.speed === 'high') {
+        results.push({ name: 'Phi 3 Mini 4K', reason: 'Fast small model for quick Q&A responses', tags: ['Fast', 'Small'] })
+        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact model for rapid question answering', tags: ['Fast', 'Small'] })
       } else {
         results.push({ name: 'Open Hermes 2 Mistral 7B', reason: 'Fine-tuned for instruction following and Q&A', tags: ['Recommended', 'Instruct'] })
         results.push({ name: 'Dolly V2 12B', reason: 'Cost-effective option for straightforward Q&A', tags: ['Cost-Effective', 'Balanced'] })
+        results.push({ name: 'Zephyr 7B Beta', reason: 'Well-tuned model for conversational Q&A', tags: ['Balanced', 'Chat'] })
       }
     }
     
@@ -208,9 +227,29 @@ export default function Home() {
     else if (data.taskType === 'translation') {
       results.push({ name: 'Qwen 2.5 32B', reason: 'Strong multilingual capabilities for translation tasks', tags: ['Multilingual', 'Large'] })
       results.push({ name: 'BLOOMZ 7B1', reason: 'Multilingual model trained on diverse languages', tags: ['Multilingual', 'Efficient'] })
+      if (data.accuracy === 'high') {
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Best accuracy for complex translation tasks', tags: ['Multilingual', 'Large'] })
+      } else {
+        results.push({ name: 'BLOOM 7B1', reason: 'Efficient multilingual model for standard translation', tags: ['Multilingual', 'Balanced'] })
+      }
     }
 
-
+    // Add fallback recommendations if no specific task selected
+    if (results.length === 0) {
+      if (data.modelSize === 'small') {
+        results.push({ name: 'Phi 3.5 Mini', reason: 'Versatile small model for various tasks', tags: ['Small', 'Versatile'] })
+        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact Google model with good performance', tags: ['Small', 'Efficient'] })
+        results.push({ name: 'Writer Palmyra Small', reason: 'Efficient small model for general use', tags: ['Small', 'Balanced'] })
+      } else if (data.modelSize === 'large') {
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Large model with excellent capabilities across tasks', tags: ['Large', 'Premium'] })
+        results.push({ name: 'Falcon 180B BF16', reason: 'Massive model for demanding applications', tags: ['Large', 'Premium'] })
+        results.push({ name: 'GPT-NeoX 20B', reason: 'Large open-source model with strong performance', tags: ['Large', 'Open-Source'] })
+      } else {
+        results.push({ name: 'Gemma 7B Instruct', reason: 'Well-balanced model for general use', tags: ['Balanced', 'Recommended'] })
+        results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality instruction-following model', tags: ['Balanced', 'Instruct'] })
+        results.push({ name: 'DBRX Instruct', reason: 'Databricks model optimized for instruction following', tags: ['Balanced', 'Instruct'] })
+      }
+    }
 
     // Add privacy considerations
     if (data.dataPrivacy === 'high') {
@@ -219,7 +258,11 @@ export default function Home() {
       })
     }
 
-    return results.slice(0, 3) // Return top 3 recommendations
+    // Remove duplicates and return top 3
+    const uniqueResults = results.filter((rec, index, self) => 
+      index === self.findIndex(r => r.name === rec.name)
+    )
+    return uniqueResults.slice(0, 3)
   }
 
   return (
