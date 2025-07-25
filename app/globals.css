@@ -575,6 +575,40 @@ button:active {
   color: #ffffff;
 }
 
+.model-details {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  color: #86868b;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 0.9rem;
+  color: #1d1d1f;
+  font-weight: 600;
+}
+
+.cost-highlight {
+  color: #007aff;
+  font-size: 1rem;
+}
+
 @media (max-width: 768px) {
   .main-content {
     grid-template-columns: 1fr;

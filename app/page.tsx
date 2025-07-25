@@ -8,12 +8,17 @@ interface FormData {
   speed: string
   dataPrivacy: string
   modelSize: string
+  contextWindow: string
+  monthlyUsage: string
 }
 
 interface ModelRecommendation {
   name: string
   reason: string
   tags: string[]
+  contextWindow: string
+  costPer1M: number
+  monthlyCost?: number
 }
 
 const bedrockModels = {
@@ -155,7 +160,9 @@ export default function Home() {
     accuracy: '',
     speed: '',
     dataPrivacy: '',
-    modelSize: ''
+    modelSize: '',
+    contextWindow: '',
+    monthlyUsage: ''
   })
   
   const [recommendations, setRecommendations] = useState<ModelRecommendation[]>([])
@@ -171,12 +178,12 @@ export default function Home() {
     
     // Multi-modal tasks
     if (data.taskType === 'multi-modal') {
-      results.push({ name: 'Whisper Large V3 Turbo', reason: 'Advanced audio processing model with speech recognition capabilities', tags: ['Multi-Modal', 'Audio'] })
+      results.push({ name: 'Whisper Large V3 Turbo', reason: 'Advanced audio processing model with speech recognition capabilities', tags: ['Multi-Modal', 'Audio'], contextWindow: '30s audio', costPer1M: 2.40 })
       if (data.accuracy === 'high') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Large model with strong reasoning for complex multi-modal tasks', tags: ['Large', 'Accurate'] })
-        results.push({ name: 'Gemma 2 27B Instruct', reason: 'Large instruction-tuned model for complex tasks', tags: ['Large', 'Accurate'] })
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Large model with strong reasoning for complex multi-modal tasks', tags: ['Large', 'Accurate'], contextWindow: '128K', costPer1M: 8.00 })
+        results.push({ name: 'Gemma 2 27B Instruct', reason: 'Large instruction-tuned model for complex tasks', tags: ['Large', 'Accurate'], contextWindow: '8K', costPer1M: 4.50 })
       } else {
-        results.push({ name: 'Qwen 2.5 14B', reason: 'Medium-sized model with good multi-modal performance', tags: ['Balanced', 'Efficient'] })
+        results.push({ name: 'Qwen 2.5 14B', reason: 'Medium-sized model with good multi-modal performance', tags: ['Balanced', 'Efficient'], contextWindow: '32K', costPer1M: 2.80 })
       }
     }
     
@@ -273,8 +280,29 @@ export default function Home() {
       })
     }
 
+    // Filter by context window if specified
+    let filteredResults = results
+    if (data.contextWindow) {
+      filteredResults = results.filter(rec => {
+        const recWindow = rec.contextWindow.toLowerCase()
+        if (data.contextWindow === '4k') return recWindow.includes('4k') || recWindow.includes('8k') || recWindow.includes('32k') || recWindow.includes('128k')
+        if (data.contextWindow === '8k') return recWindow.includes('8k') || recWindow.includes('32k') || recWindow.includes('128k')
+        if (data.contextWindow === '32k') return recWindow.includes('32k') || recWindow.includes('128k')
+        if (data.contextWindow === '128k') return recWindow.includes('128k')
+        return true
+      })
+    }
+
+    // Calculate monthly costs if usage is specified
+    if (data.monthlyUsage) {
+      const tokensPerMonth = parseInt(data.monthlyUsage) * 1000000 // Convert to actual tokens
+      filteredResults.forEach(rec => {
+        rec.monthlyCost = (rec.costPer1M * tokensPerMonth) / 1000000
+      })
+    }
+
     // Remove duplicates and return top 3
-    const uniqueResults = results.filter((rec, index, self) => 
+    const uniqueResults = filteredResults.filter((rec, index, self) => 
       index === self.findIndex(r => r.name === rec.name)
     )
     return uniqueResults.slice(0, 3)
@@ -396,6 +424,28 @@ export default function Home() {
           </select>
         </div>
 
+        <div className="form-group">
+          <label>Context Window Requirement</label>
+          <select value={formData.contextWindow} onChange={(e) => setFormData({...formData, contextWindow: e.target.value})}>
+            <option value="">Any context window</option>
+            <option value="4k">4K tokens</option>
+            <option value="8k">8K tokens</option>
+            <option value="32k">32K tokens</option>
+            <option value="128k">128K+ tokens</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Expected Monthly Usage</label>
+          <select value={formData.monthlyUsage} onChange={(e) => setFormData({...formData, monthlyUsage: e.target.value})}>
+            <option value="">Select usage level</option>
+            <option value="1">Light (1M tokens/month)</option>
+            <option value="10">Medium (10M tokens/month)</option>
+            <option value="100">Heavy (100M tokens/month)</option>
+            <option value="1000">Enterprise (1B+ tokens/month)</option>
+          </select>
+        </div>
+
 
 
             <button type="submit">Get Recommendations</button>
@@ -420,6 +470,22 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="model-reason">{rec.reason}</div>
+                <div className="model-details">
+                  <div className="detail-item">
+                    <span className="detail-label">Context Window:</span>
+                    <span className="detail-value">{rec.contextWindow}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Cost per 1M tokens:</span>
+                    <span className="detail-value">${rec.costPer1M.toFixed(2)}</span>
+                  </div>
+                  {rec.monthlyCost && (
+                    <div className="detail-item">
+                      <span className="detail-label">Est. Monthly Cost:</span>
+                      <span className="detail-value cost-highlight">${rec.monthlyCost.toFixed(0)}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             ))
           )}
