@@ -190,28 +190,28 @@ export default function Home() {
     // Text generation
     else if (data.taskType === 'generation') {
       if (data.modelSize === 'small' && data.speed === 'high') {
-        results.push({ name: 'Phi 3.5 Mini', reason: 'Ultra-fast small model optimized for quick text generation', tags: ['Fast', 'Small'] })
-        results.push({ name: 'Mistral Lite', reason: 'Lightweight Mistral variant for rapid generation', tags: ['Fast', 'Efficient'] })
-        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact Google model for fast generation', tags: ['Fast', 'Small'] })
+        results.push({ name: 'Phi 3.5 Mini', reason: 'Ultra-fast small model optimized for quick text generation', tags: ['Fast', 'Small'], contextWindow: '128K', costPer1M: 0.15 })
+        results.push({ name: 'Mistral Lite', reason: 'Lightweight Mistral variant for rapid generation', tags: ['Fast', 'Efficient'], contextWindow: '32K', costPer1M: 0.20 })
+        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact Google model for fast generation', tags: ['Fast', 'Small'], contextWindow: '8K', costPer1M: 0.25 })
       } else if (data.modelSize === 'large' || data.accuracy === 'high') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Highest accuracy for complex text generation tasks', tags: ['Accurate', 'Large'] })
-        results.push({ name: 'Falcon 180B BF16', reason: 'Massive model for highest quality generation', tags: ['Large', 'Premium'] })
-        results.push({ name: 'CyberAgentLM3 22B Chat', reason: 'Large conversational model with strong generation', tags: ['Large', 'Chat'] })
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Highest accuracy for complex text generation tasks', tags: ['Accurate', 'Large'], contextWindow: '128K', costPer1M: 8.00 })
+        results.push({ name: 'Falcon 180B BF16', reason: 'Massive model for highest quality generation', tags: ['Large', 'Premium'], contextWindow: '32K', costPer1M: 12.00 })
+        results.push({ name: 'CyberAgentLM3 22B Chat', reason: 'Large conversational model with strong generation', tags: ['Large', 'Chat'], contextWindow: '32K', costPer1M: 3.50 })
       } else {
-        results.push({ name: 'Gemma 7B Instruct', reason: 'Balanced performance for general text generation', tags: ['Recommended', 'Balanced'] })
-        results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality 7B model with strong instruction following', tags: ['Balanced', 'Instruct'] })
-        results.push({ name: 'Qwen 2.5 7B', reason: 'Efficient model with good generation quality', tags: ['Balanced', 'Efficient'] })
+        results.push({ name: 'Gemma 7B Instruct', reason: 'Balanced performance for general text generation', tags: ['Recommended', 'Balanced'], contextWindow: '8K', costPer1M: 0.70 })
+        results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality 7B model with strong instruction following', tags: ['Balanced', 'Instruct'], contextWindow: '32K', costPer1M: 0.60 })
+        results.push({ name: 'Qwen 2.5 7B', reason: 'Efficient model with good generation quality', tags: ['Balanced', 'Efficient'], contextWindow: '128K', costPer1M: 0.50 })
       }
     }
     
     // Summarization
     else if (data.taskType === 'summarization') {
-      results.push({ name: 'BART Large CNN SamSum', reason: 'Specialized summarization model trained on conversation data', tags: ['Specialized', 'Summarization'] })
-      results.push({ name: 'DistilBART CNN 12-6', reason: 'Efficient distilled model for news summarization', tags: ['Fast', 'Efficient'] })
+      results.push({ name: 'BART Large CNN SamSum', reason: 'Specialized summarization model trained on conversation data', tags: ['Specialized', 'Summarization'], contextWindow: '4K', costPer1M: 1.20 })
+      results.push({ name: 'DistilBART CNN 12-6', reason: 'Efficient distilled model for news summarization', tags: ['Fast', 'Efficient'], contextWindow: '4K', costPer1M: 0.80 })
       if (data.speed === 'high') {
-        results.push({ name: 'DistilBART CNN 6-6', reason: 'Fastest summarization model for quick processing', tags: ['Fast', 'Small'] })
+        results.push({ name: 'DistilBART CNN 6-6', reason: 'Fastest summarization model for quick processing', tags: ['Fast', 'Small'], contextWindow: '4K', costPer1M: 0.60 })
       } else {
-        results.push({ name: 'Flan-T5 Large', reason: 'Instruction-tuned model good for summarization', tags: ['Balanced', 'Instruct'] })
+        results.push({ name: 'Flan-T5 Large', reason: 'Instruction-tuned model good for summarization', tags: ['Balanced', 'Instruct'], contextWindow: '8K', costPer1M: 1.00 })
       }
     }
     
