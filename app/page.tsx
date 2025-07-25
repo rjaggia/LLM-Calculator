@@ -223,6 +223,21 @@ export default function Home() {
       }
     }
     
+    // Code Generation
+    else if (data.taskType === 'code') {
+      if (data.accuracy === 'high') {
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Excellent code generation with strong reasoning capabilities', tags: ['Code', 'Large', 'Accurate'] })
+        results.push({ name: 'Yi 1.5 34B', reason: 'Large model with strong programming and logic skills', tags: ['Code', 'Large', 'Accurate'] })
+      } else if (data.speed === 'high') {
+        results.push({ name: 'Phi 3 Mini 4K', reason: 'Fast small model for quick code completion', tags: ['Code', 'Fast', 'Small'] })
+        results.push({ name: 'Qwen 3 4B', reason: 'Efficient model optimized for coding tasks', tags: ['Code', 'Fast', 'Efficient'] })
+      } else {
+        results.push({ name: 'Mistral 7B OpenOrca', reason: 'Well-balanced model with good coding capabilities', tags: ['Code', 'Balanced', 'Instruct'] })
+        results.push({ name: 'Gemma 7B Instruct', reason: 'Instruction-tuned model suitable for code generation', tags: ['Code', 'Balanced', 'Instruct'] })
+        results.push({ name: 'Qwen 2.5 14B', reason: 'Medium-sized model with strong programming skills', tags: ['Code', 'Balanced', 'Accurate'] })
+      }
+    }
+    
     // Translation
     else if (data.taskType === 'translation') {
       results.push({ name: 'Qwen 2.5 32B', reason: 'Strong multilingual capabilities for translation tasks', tags: ['Multilingual', 'Large'] })
@@ -311,7 +326,7 @@ export default function Home() {
               <span className="stat-label">Models</span>
             </div>
             <div className="stat">
-              <span className="stat-number">5</span>
+              <span className="stat-number">6</span>
               <span className="stat-label">Task Types</span>
             </div>
             <div className="stat">
@@ -333,6 +348,7 @@ export default function Home() {
           <select value={formData.taskType} onChange={(e) => setFormData({...formData, taskType: e.target.value})}>
             <option value="">Select task type</option>
             <option value="generation">Text Generation</option>
+            <option value="code">Code Generation</option>
             <option value="summarization">Summarization</option>
             <option value="translation">Translation</option>
             <option value="qa">Question-Answering</option>

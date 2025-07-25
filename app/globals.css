@@ -570,6 +570,11 @@ button:active {
   color: #ffffff;
 }
 
+.tag.code {
+  background: #34c759;
+  color: #ffffff;
+}
+
 @media (max-width: 768px) {
   .main-content {
     grid-template-columns: 1fr;
