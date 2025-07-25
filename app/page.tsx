@@ -218,58 +218,58 @@ export default function Home() {
     // Question-Answering
     else if (data.taskType === 'qa') {
       if (data.accuracy === 'high') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Most accurate for complex question answering', tags: ['Accurate', 'Large'] })
-        results.push({ name: 'Yi 1.5 34B', reason: 'Large model with strong reasoning capabilities', tags: ['Accurate', 'Large'] })
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Most accurate for complex question answering', tags: ['Accurate', 'Large'], contextWindow: '128K', costPer1M: 8.00 })
+        results.push({ name: 'Yi 1.5 34B', reason: 'Large model with strong reasoning capabilities', tags: ['Accurate', 'Large'], contextWindow: '32K', costPer1M: 5.50 })
       } else if (data.speed === 'high') {
-        results.push({ name: 'Phi 3 Mini 4K', reason: 'Fast small model for quick Q&A responses', tags: ['Fast', 'Small'] })
-        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact model for rapid question answering', tags: ['Fast', 'Small'] })
+        results.push({ name: 'Phi 3 Mini 4K', reason: 'Fast small model for quick Q&A responses', tags: ['Fast', 'Small'], contextWindow: '4K', costPer1M: 0.15 })
+        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact model for rapid question answering', tags: ['Fast', 'Small'], contextWindow: '8K', costPer1M: 0.25 })
       } else {
-        results.push({ name: 'Open Hermes 2 Mistral 7B', reason: 'Fine-tuned for instruction following and Q&A', tags: ['Recommended', 'Instruct'] })
-        results.push({ name: 'Dolly V2 12B', reason: 'Cost-effective option for straightforward Q&A', tags: ['Cost-Effective', 'Balanced'] })
-        results.push({ name: 'Zephyr 7B Beta', reason: 'Well-tuned model for conversational Q&A', tags: ['Balanced', 'Chat'] })
+        results.push({ name: 'Open Hermes 2 Mistral 7B', reason: 'Fine-tuned for instruction following and Q&A', tags: ['Recommended', 'Instruct'], contextWindow: '32K', costPer1M: 0.60 })
+        results.push({ name: 'Dolly V2 12B', reason: 'Cost-effective option for straightforward Q&A', tags: ['Cost-Effective', 'Balanced'], contextWindow: '8K', costPer1M: 1.20 })
+        results.push({ name: 'Zephyr 7B Beta', reason: 'Well-tuned model for conversational Q&A', tags: ['Balanced', 'Chat'], contextWindow: '32K', costPer1M: 0.70 })
       }
     }
     
     // Code Generation
     else if (data.taskType === 'code') {
       if (data.accuracy === 'high') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Excellent code generation with strong reasoning capabilities', tags: ['Code', 'Large', 'Accurate'] })
-        results.push({ name: 'Yi 1.5 34B', reason: 'Large model with strong programming and logic skills', tags: ['Code', 'Large', 'Accurate'] })
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Excellent code generation with strong reasoning capabilities', tags: ['Code', 'Large', 'Accurate'], contextWindow: '128K', costPer1M: 8.00 })
+        results.push({ name: 'Yi 1.5 34B', reason: 'Large model with strong programming and logic skills', tags: ['Code', 'Large', 'Accurate'], contextWindow: '32K', costPer1M: 5.50 })
       } else if (data.speed === 'high') {
-        results.push({ name: 'Phi 3 Mini 4K', reason: 'Fast small model for quick code completion', tags: ['Code', 'Fast', 'Small'] })
-        results.push({ name: 'Qwen 3 4B', reason: 'Efficient model optimized for coding tasks', tags: ['Code', 'Fast', 'Efficient'] })
+        results.push({ name: 'Phi 3 Mini 4K', reason: 'Fast small model for quick code completion', tags: ['Code', 'Fast', 'Small'], contextWindow: '4K', costPer1M: 0.15 })
+        results.push({ name: 'Qwen 3 4B', reason: 'Efficient model optimized for coding tasks', tags: ['Code', 'Fast', 'Efficient'], contextWindow: '32K', costPer1M: 0.40 })
       } else {
-        results.push({ name: 'Mistral 7B OpenOrca', reason: 'Well-balanced model with good coding capabilities', tags: ['Code', 'Balanced', 'Instruct'] })
-        results.push({ name: 'Gemma 7B Instruct', reason: 'Instruction-tuned model suitable for code generation', tags: ['Code', 'Balanced', 'Instruct'] })
-        results.push({ name: 'Qwen 2.5 14B', reason: 'Medium-sized model with strong programming skills', tags: ['Code', 'Balanced', 'Accurate'] })
+        results.push({ name: 'Mistral 7B OpenOrca', reason: 'Well-balanced model with good coding capabilities', tags: ['Code', 'Balanced', 'Instruct'], contextWindow: '32K', costPer1M: 0.60 })
+        results.push({ name: 'Gemma 7B Instruct', reason: 'Instruction-tuned model suitable for code generation', tags: ['Code', 'Balanced', 'Instruct'], contextWindow: '8K', costPer1M: 0.70 })
+        results.push({ name: 'Qwen 2.5 14B', reason: 'Medium-sized model with strong programming skills', tags: ['Code', 'Balanced', 'Accurate'], contextWindow: '32K', costPer1M: 2.80 })
       }
     }
     
     // Translation
     else if (data.taskType === 'translation') {
-      results.push({ name: 'Qwen 2.5 32B', reason: 'Strong multilingual capabilities for translation tasks', tags: ['Multilingual', 'Large'] })
-      results.push({ name: 'BLOOMZ 7B1', reason: 'Multilingual model trained on diverse languages', tags: ['Multilingual', 'Efficient'] })
+      results.push({ name: 'Qwen 2.5 32B', reason: 'Strong multilingual capabilities for translation tasks', tags: ['Multilingual', 'Large'], contextWindow: '128K', costPer1M: 4.80 })
+      results.push({ name: 'BLOOMZ 7B1', reason: 'Multilingual model trained on diverse languages', tags: ['Multilingual', 'Efficient'], contextWindow: '32K', costPer1M: 0.80 })
       if (data.accuracy === 'high') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Best accuracy for complex translation tasks', tags: ['Multilingual', 'Large'] })
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Best accuracy for complex translation tasks', tags: ['Multilingual', 'Large'], contextWindow: '128K', costPer1M: 8.00 })
       } else {
-        results.push({ name: 'BLOOM 7B1', reason: 'Efficient multilingual model for standard translation', tags: ['Multilingual', 'Balanced'] })
+        results.push({ name: 'BLOOM 7B1', reason: 'Efficient multilingual model for standard translation', tags: ['Multilingual', 'Balanced'], contextWindow: '32K', costPer1M: 0.70 })
       }
     }
 
     // Add fallback recommendations if no specific task selected
     if (results.length === 0) {
       if (data.modelSize === 'small') {
-        results.push({ name: 'Phi 3.5 Mini', reason: 'Versatile small model for various tasks', tags: ['Small', 'Versatile'] })
-        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact Google model with good performance', tags: ['Small', 'Efficient'] })
-        results.push({ name: 'Writer Palmyra Small', reason: 'Efficient small model for general use', tags: ['Small', 'Balanced'] })
+        results.push({ name: 'Phi 3.5 Mini', reason: 'Versatile small model for various tasks', tags: ['Small', 'Versatile'], contextWindow: '128K', costPer1M: 0.15 })
+        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact Google model with good performance', tags: ['Small', 'Efficient'], contextWindow: '8K', costPer1M: 0.25 })
+        results.push({ name: 'Writer Palmyra Small', reason: 'Efficient small model for general use', tags: ['Small', 'Balanced'], contextWindow: '8K', costPer1M: 0.30 })
       } else if (data.modelSize === 'large') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Large model with excellent capabilities across tasks', tags: ['Large', 'Premium'] })
-        results.push({ name: 'Falcon 180B BF16', reason: 'Massive model for demanding applications', tags: ['Large', 'Premium'] })
-        results.push({ name: 'GPT-NeoX 20B', reason: 'Large open-source model with strong performance', tags: ['Large', 'Open-Source'] })
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Large model with excellent capabilities across tasks', tags: ['Large', 'Premium'], contextWindow: '128K', costPer1M: 8.00 })
+        results.push({ name: 'Falcon 180B BF16', reason: 'Massive model for demanding applications', tags: ['Large', 'Premium'], contextWindow: '32K', costPer1M: 12.00 })
+        results.push({ name: 'GPT-NeoX 20B', reason: 'Large open-source model with strong performance', tags: ['Large', 'Open-Source'], contextWindow: '32K', costPer1M: 3.20 })
       } else {
-        results.push({ name: 'Gemma 7B Instruct', reason: 'Well-balanced model for general use', tags: ['Balanced', 'Recommended'] })
-        results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality instruction-following model', tags: ['Balanced', 'Instruct'] })
-        results.push({ name: 'DBRX Instruct', reason: 'Databricks model optimized for instruction following', tags: ['Balanced', 'Instruct'] })
+        results.push({ name: 'Gemma 7B Instruct', reason: 'Well-balanced model for general use', tags: ['Balanced', 'Recommended'], contextWindow: '8K', costPer1M: 0.70 })
+        results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality instruction-following model', tags: ['Balanced', 'Instruct'], contextWindow: '32K', costPer1M: 0.60 })
+        results.push({ name: 'DBRX Instruct', reason: 'Databricks model optimized for instruction following', tags: ['Balanced', 'Instruct'], contextWindow: '32K', costPer1M: 2.40 })
       }
     }
 
