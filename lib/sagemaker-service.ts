@@ -1,17 +1,19 @@
-import { SageMakerClient, ListHubContentsCommand, HubContentInfo } from '@aws-sdk/client-sagemaker';
-
 export interface CachedModels {
   timestamp: number;
-  models: HubContentInfo[];
+  models: any[];
 }
 
 export class SageMakerService {
-  private sageMakerClient: SageMakerClient;
+  private sageMakerClient: any;
   private cacheFile: string;
   private cacheDuration: number;
 
   constructor(region: string = 'us-east-1', cacheFile?: string) {
-    this.sageMakerClient = new SageMakerClient({ region });
+    // Only import AWS SDK on server side
+    if (typeof window === 'undefined') {
+      const { SageMakerClient } = require('@aws-sdk/client-sagemaker');
+      this.sageMakerClient = new SageMakerClient({ region });
+    }
     this.cacheFile = cacheFile || 'models-cache.json';
     this.cacheDuration = 24 * 60 * 60 * 1000; // 24 hours
   }
@@ -20,9 +22,9 @@ export class SageMakerService {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  async getHuggingFaceModelsFromSageMakerHub(): Promise<HubContentInfo[]> {
+  async getHuggingFaceModelsFromSageMakerHub(): Promise<any[]> {
     // For web deployment, we'll use a fallback approach since we can't cache files
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' || !this.sageMakerClient) {
       return this.getFallbackModels();
     }
 
@@ -35,6 +37,7 @@ export class SageMakerService {
     
     do {
       try {
+        const { ListHubContentsCommand } = require('@aws-sdk/client-sagemaker');
         const { HubContentSummaries, NextToken: NextNextToken } = await this.sageMakerClient.send(
           new ListHubContentsCommand({
             HubName: "SageMakerPublicHub",
@@ -80,7 +83,7 @@ export class SageMakerService {
     return huggingFaceBedrockModels;
   }
 
-  private getFallbackModels(): HubContentInfo[] {
+  private getFallbackModels(): any[] {
     // Fallback models when SageMaker API is not available
     return [
       {

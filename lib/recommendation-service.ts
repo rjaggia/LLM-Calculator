@@ -1,5 +1,3 @@
-import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
-
 export interface UserRequirements {
   taskType: string;
   accuracyPriority: string;
@@ -28,16 +26,25 @@ export interface BedrockModel {
 }
 
 export class RecommendationService {
-  private bedrockClient: BedrockRuntimeClient;
+  private bedrockClient: any;
 
   constructor(region: string = 'us-east-1') {
-    this.bedrockClient = new BedrockRuntimeClient({ region });
+    // Only import AWS SDK on server side
+    if (typeof window === 'undefined') {
+      const { BedrockRuntimeClient } = require('@aws-sdk/client-bedrock-runtime');
+      this.bedrockClient = new BedrockRuntimeClient({ region });
+    }
   }
 
   async getModelRecommendations(
     requirements: UserRequirements,
     availableModels: BedrockModel[]
   ): Promise<ModelRecommendation[]> {
+    // Return fallback if no Bedrock client (client-side)
+    if (!this.bedrockClient) {
+      return this.getFallbackRecommendations(requirements);
+    }
+
     const prompt = `You are an AI model selection expert. Given the user requirements and available Hugging Face models on Amazon Bedrock, analyze and recommend the top 3 models that best match their needs.
 
 User Requirements:
@@ -77,6 +84,7 @@ Consider factors like:
 Provide only valid JSON response, no additional text.`;
 
     try {
+      const { InvokeModelCommand } = require('@aws-sdk/client-bedrock-runtime');
       const command = new InvokeModelCommand({
         modelId: 'us.anthropic.claude-3-5-sonnet-20241022-v2:0',
         contentType: 'application/json',
@@ -111,7 +119,7 @@ Provide only valid JSON response, no additional text.`;
       return recommendations;
     } catch (error) {
       console.error('Error getting recommendations from Bedrock:', error);
-      throw error;
+      return this.getFallbackRecommendations(requirements);
     }
   }
 
