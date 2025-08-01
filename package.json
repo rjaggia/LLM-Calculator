@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.848.0",
-    "@aws-sdk/client-sagemaker": "^3.850.0",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18"
