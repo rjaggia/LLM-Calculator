@@ -1,0 +1,20 @@
+{
+  "name": "hf-llm-calc",
+  "version": "1.0.0",
+  "description": "Hugging Face LLM Calculator",
+  "main": "index.ts",
+  "scripts": {
+    "start": "npx tsx index.ts"
+  },
+  "private": true,
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.848.0",
+    "@aws-sdk/client-sagemaker": "^3.850.0",
+    "@inquirer/prompts": "^7.7.1",
+    "chalk": "^5.4.1",
+    "tsx": "^4.20.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0"
+  }
+}

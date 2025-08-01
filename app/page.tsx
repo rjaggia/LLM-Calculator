@@ -167,145 +167,75 @@ export default function Home() {
   
   const [recommendations, setRecommendations] = useState<ModelRecommendation[]>([])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const recs = getRecommendations(formData)
+    const recs = await getRecommendations(formData)
     setRecommendations(recs)
   }
 
-  const getRecommendations = (data: FormData): ModelRecommendation[] => {
+  const getRecommendations = async (data: FormData): Promise<ModelRecommendation[]> => {
+    try {
+      // Map form data to API format
+      const requirements = {
+        taskType: data.taskType,
+        accuracyPriority: data.accuracy,
+        speedPriority: data.speed,
+        dataPrivacy: data.dataPrivacy,
+        modelSize: data.modelSize,
+        contextWindow: data.contextWindow,
+        monthlyUsage: data.monthlyUsage
+      };
+
+      const response = await fetch('/api/recommendations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requirements),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get recommendations');
+      }
+
+      const result = await response.json();
+      
+      if (result.success) {
+        // Convert API response to web app format
+        return result.recommendations.map((rec: any) => ({
+          name: rec.modelName,
+          reason: rec.reasoning,
+          tags: rec.tags || ['Recommended'],
+          contextWindow: rec.contextWindow || '8K',
+          costPer1M: rec.costPer1M || 1.0,
+          monthlyCost: rec.monthlyCost
+        }));
+      } else {
+        throw new Error(result.message || 'Failed to get recommendations');
+      }
+    } catch (error) {
+      console.error('Error getting recommendations:', error);
+      // Fallback to static recommendations
+      return getFallbackRecommendations(data);
+    }
+  }
+
+  const getFallbackRecommendations = (data: FormData): ModelRecommendation[] => {
     const results: ModelRecommendation[] = []
     
-    // Multi-modal tasks
-    if (data.taskType === 'multi-modal') {
-      results.push({ name: 'Whisper Large V3 Turbo', reason: 'Advanced audio processing model with speech recognition capabilities', tags: ['Multi-Modal', 'Audio'], contextWindow: '30s audio', costPer1M: 2.40 })
-      if (data.accuracy === 'high') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Large model with strong reasoning for complex multi-modal tasks', tags: ['Large', 'Accurate'], contextWindow: '128K', costPer1M: 8.00 })
-        results.push({ name: 'Gemma 2 27B Instruct', reason: 'Large instruction-tuned model for complex tasks', tags: ['Large', 'Accurate'], contextWindow: '8K', costPer1M: 4.50 })
-      } else {
-        results.push({ name: 'Qwen 2.5 14B', reason: 'Medium-sized model with good multi-modal performance', tags: ['Balanced', 'Efficient'], contextWindow: '32K', costPer1M: 2.80 })
-      }
+    // Simple fallback logic
+    if (data.taskType === 'code') {
+      results.push({ name: 'Qwen 2.5 72B', reason: 'Excellent code generation capabilities', tags: ['Code', 'Large'], contextWindow: '128K', costPer1M: 8.00 })
+    } else if (data.taskType === 'summarization') {
+      results.push({ name: 'BART Large CNN SamSum', reason: 'Specialized for summarization tasks', tags: ['Summarization'], contextWindow: '4K', costPer1M: 1.20 })
+    } else {
+      results.push({ name: 'Gemma 7B Instruct', reason: 'Well-balanced model for general use', tags: ['Balanced'], contextWindow: '8K', costPer1M: 0.70 })
     }
     
-    // Text generation
-    else if (data.taskType === 'generation') {
-      if (data.modelSize === 'small' && data.speed === 'high') {
-        results.push({ name: 'Phi 3.5 Mini', reason: 'Ultra-fast small model optimized for quick text generation', tags: ['Fast', 'Small'], contextWindow: '128K', costPer1M: 0.15 })
-        results.push({ name: 'Mistral Lite', reason: 'Lightweight Mistral variant for rapid generation', tags: ['Fast', 'Efficient'], contextWindow: '32K', costPer1M: 0.20 })
-        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact Google model for fast generation', tags: ['Fast', 'Small'], contextWindow: '8K', costPer1M: 0.25 })
-      } else if (data.modelSize === 'large' || data.accuracy === 'high') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Highest accuracy for complex text generation tasks', tags: ['Accurate', 'Large'], contextWindow: '128K', costPer1M: 8.00 })
-        results.push({ name: 'Falcon 180B BF16', reason: 'Massive model for highest quality generation', tags: ['Large', 'Premium'], contextWindow: '32K', costPer1M: 12.00 })
-        results.push({ name: 'CyberAgentLM3 22B Chat', reason: 'Large conversational model with strong generation', tags: ['Large', 'Chat'], contextWindow: '32K', costPer1M: 3.50 })
-      } else {
-        results.push({ name: 'Gemma 7B Instruct', reason: 'Balanced performance for general text generation', tags: ['Recommended', 'Balanced'], contextWindow: '8K', costPer1M: 0.70 })
-        results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality 7B model with strong instruction following', tags: ['Balanced', 'Instruct'], contextWindow: '32K', costPer1M: 0.60 })
-        results.push({ name: 'Qwen 2.5 7B', reason: 'Efficient model with good generation quality', tags: ['Balanced', 'Efficient'], contextWindow: '128K', costPer1M: 0.50 })
-      }
-    }
+    results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality instruction-following model', tags: ['Instruct'], contextWindow: '32K', costPer1M: 0.60 })
+    results.push({ name: 'Phi 3.5 Mini', reason: 'Fast and efficient small model', tags: ['Fast', 'Small'], contextWindow: '128K', costPer1M: 0.15 })
     
-    // Summarization
-    else if (data.taskType === 'summarization') {
-      results.push({ name: 'BART Large CNN SamSum', reason: 'Specialized summarization model trained on conversation data', tags: ['Specialized', 'Summarization'], contextWindow: '4K', costPer1M: 1.20 })
-      results.push({ name: 'DistilBART CNN 12-6', reason: 'Efficient distilled model for news summarization', tags: ['Fast', 'Efficient'], contextWindow: '4K', costPer1M: 0.80 })
-      if (data.speed === 'high') {
-        results.push({ name: 'DistilBART CNN 6-6', reason: 'Fastest summarization model for quick processing', tags: ['Fast', 'Small'], contextWindow: '4K', costPer1M: 0.60 })
-      } else {
-        results.push({ name: 'Flan-T5 Large', reason: 'Instruction-tuned model good for summarization', tags: ['Balanced', 'Instruct'], contextWindow: '8K', costPer1M: 1.00 })
-      }
-    }
-    
-    // Question-Answering
-    else if (data.taskType === 'qa') {
-      if (data.accuracy === 'high') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Most accurate for complex question answering', tags: ['Accurate', 'Large'], contextWindow: '128K', costPer1M: 8.00 })
-        results.push({ name: 'Yi 1.5 34B', reason: 'Large model with strong reasoning capabilities', tags: ['Accurate', 'Large'], contextWindow: '32K', costPer1M: 5.50 })
-      } else if (data.speed === 'high') {
-        results.push({ name: 'Phi 3 Mini 4K', reason: 'Fast small model for quick Q&A responses', tags: ['Fast', 'Small'], contextWindow: '4K', costPer1M: 0.15 })
-        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact model for rapid question answering', tags: ['Fast', 'Small'], contextWindow: '8K', costPer1M: 0.25 })
-      } else {
-        results.push({ name: 'Open Hermes 2 Mistral 7B', reason: 'Fine-tuned for instruction following and Q&A', tags: ['Recommended', 'Instruct'], contextWindow: '32K', costPer1M: 0.60 })
-        results.push({ name: 'Dolly V2 12B', reason: 'Cost-effective option for straightforward Q&A', tags: ['Cost-Effective', 'Balanced'], contextWindow: '8K', costPer1M: 1.20 })
-        results.push({ name: 'Zephyr 7B Beta', reason: 'Well-tuned model for conversational Q&A', tags: ['Balanced', 'Chat'], contextWindow: '32K', costPer1M: 0.70 })
-      }
-    }
-    
-    // Code Generation
-    else if (data.taskType === 'code') {
-      if (data.accuracy === 'high') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Excellent code generation with strong reasoning capabilities', tags: ['Code', 'Large', 'Accurate'], contextWindow: '128K', costPer1M: 8.00 })
-        results.push({ name: 'Yi 1.5 34B', reason: 'Large model with strong programming and logic skills', tags: ['Code', 'Large', 'Accurate'], contextWindow: '32K', costPer1M: 5.50 })
-      } else if (data.speed === 'high') {
-        results.push({ name: 'Phi 3 Mini 4K', reason: 'Fast small model for quick code completion', tags: ['Code', 'Fast', 'Small'], contextWindow: '4K', costPer1M: 0.15 })
-        results.push({ name: 'Qwen 3 4B', reason: 'Efficient model optimized for coding tasks', tags: ['Code', 'Fast', 'Efficient'], contextWindow: '32K', costPer1M: 0.40 })
-      } else {
-        results.push({ name: 'Mistral 7B OpenOrca', reason: 'Well-balanced model with good coding capabilities', tags: ['Code', 'Balanced', 'Instruct'], contextWindow: '32K', costPer1M: 0.60 })
-        results.push({ name: 'Gemma 7B Instruct', reason: 'Instruction-tuned model suitable for code generation', tags: ['Code', 'Balanced', 'Instruct'], contextWindow: '8K', costPer1M: 0.70 })
-        results.push({ name: 'Qwen 2.5 14B', reason: 'Medium-sized model with strong programming skills', tags: ['Code', 'Balanced', 'Accurate'], contextWindow: '32K', costPer1M: 2.80 })
-      }
-    }
-    
-    // Translation
-    else if (data.taskType === 'translation') {
-      results.push({ name: 'Qwen 2.5 32B', reason: 'Strong multilingual capabilities for translation tasks', tags: ['Multilingual', 'Large'], contextWindow: '128K', costPer1M: 4.80 })
-      results.push({ name: 'BLOOMZ 7B1', reason: 'Multilingual model trained on diverse languages', tags: ['Multilingual', 'Efficient'], contextWindow: '32K', costPer1M: 0.80 })
-      if (data.accuracy === 'high') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Best accuracy for complex translation tasks', tags: ['Multilingual', 'Large'], contextWindow: '128K', costPer1M: 8.00 })
-      } else {
-        results.push({ name: 'BLOOM 7B1', reason: 'Efficient multilingual model for standard translation', tags: ['Multilingual', 'Balanced'], contextWindow: '32K', costPer1M: 0.70 })
-      }
-    }
-
-    // Add fallback recommendations if no specific task selected
-    if (results.length === 0) {
-      if (data.modelSize === 'small') {
-        results.push({ name: 'Phi 3.5 Mini', reason: 'Versatile small model for various tasks', tags: ['Small', 'Versatile'], contextWindow: '128K', costPer1M: 0.15 })
-        results.push({ name: 'Gemma 2B Instruct', reason: 'Compact Google model with good performance', tags: ['Small', 'Efficient'], contextWindow: '8K', costPer1M: 0.25 })
-        results.push({ name: 'Writer Palmyra Small', reason: 'Efficient small model for general use', tags: ['Small', 'Balanced'], contextWindow: '8K', costPer1M: 0.30 })
-      } else if (data.modelSize === 'large') {
-        results.push({ name: 'Qwen 2.5 72B', reason: 'Large model with excellent capabilities across tasks', tags: ['Large', 'Premium'], contextWindow: '128K', costPer1M: 8.00 })
-        results.push({ name: 'Falcon 180B BF16', reason: 'Massive model for demanding applications', tags: ['Large', 'Premium'], contextWindow: '32K', costPer1M: 12.00 })
-        results.push({ name: 'GPT-NeoX 20B', reason: 'Large open-source model with strong performance', tags: ['Large', 'Open-Source'], contextWindow: '32K', costPer1M: 3.20 })
-      } else {
-        results.push({ name: 'Gemma 7B Instruct', reason: 'Well-balanced model for general use', tags: ['Balanced', 'Recommended'], contextWindow: '8K', costPer1M: 0.70 })
-        results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality instruction-following model', tags: ['Balanced', 'Instruct'], contextWindow: '32K', costPer1M: 0.60 })
-        results.push({ name: 'DBRX Instruct', reason: 'Databricks model optimized for instruction following', tags: ['Balanced', 'Instruct'], contextWindow: '32K', costPer1M: 2.40 })
-      }
-    }
-
-    // Add privacy considerations
-    if (data.dataPrivacy === 'high') {
-      results.forEach(rec => {
-        rec.reason += '. All Bedrock models provide data isolation and encryption.'
-      })
-    }
-
-    // Filter by context window if specified
-    let filteredResults = results
-    if (data.contextWindow) {
-      filteredResults = results.filter(rec => {
-        const recWindow = rec.contextWindow.toLowerCase()
-        if (data.contextWindow === '4k') return recWindow.includes('4k') || recWindow.includes('8k') || recWindow.includes('32k') || recWindow.includes('128k')
-        if (data.contextWindow === '8k') return recWindow.includes('8k') || recWindow.includes('32k') || recWindow.includes('128k')
-        if (data.contextWindow === '32k') return recWindow.includes('32k') || recWindow.includes('128k')
-        if (data.contextWindow === '128k') return recWindow.includes('128k')
-        return true
-      })
-    }
-
-    // Calculate monthly costs if usage is specified
-    if (data.monthlyUsage) {
-      const tokensPerMonth = parseInt(data.monthlyUsage) * 1000000 // Convert to actual tokens
-      filteredResults.forEach(rec => {
-        rec.monthlyCost = (rec.costPer1M * tokensPerMonth) / 1000000
-      })
-    }
-
-    // Remove duplicates and return top 3
-    const uniqueResults = filteredResults.filter((rec, index, self) => 
-      index === self.findIndex(r => r.name === rec.name)
-    )
-    return uniqueResults.slice(0, 3)
+    return results.slice(0, 3)
   }
 
   return (
