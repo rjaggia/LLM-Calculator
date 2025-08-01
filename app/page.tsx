@@ -174,66 +174,57 @@ export default function Home() {
   }
 
   const getRecommendations = async (data: FormData): Promise<ModelRecommendation[]> => {
-    try {
-      // Map form data to API format
-      const requirements = {
-        taskType: data.taskType,
-        accuracyPriority: data.accuracy,
-        speedPriority: data.speed,
-        dataPrivacy: data.dataPrivacy,
-        modelSize: data.modelSize,
-        contextWindow: data.contextWindow,
-        monthlyUsage: data.monthlyUsage
-      };
-
-      const response = await fetch('/api/recommendations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requirements),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get recommendations');
-      }
-
-      const result = await response.json();
-      
-      if (result.success) {
-        // Convert API response to web app format
-        return result.recommendations.map((rec: any) => ({
-          name: rec.modelName,
-          reason: rec.reasoning,
-          tags: rec.tags || ['Recommended'],
-          contextWindow: rec.contextWindow || '8K',
-          costPer1M: rec.costPer1M || 1.0,
-          monthlyCost: rec.monthlyCost
-        }));
-      } else {
-        throw new Error(result.message || 'Failed to get recommendations');
-      }
-    } catch (error) {
-      console.error('Error getting recommendations:', error);
-      // Fallback to static recommendations
-      return getFallbackRecommendations(data);
-    }
+    return getFallbackRecommendations(data);
   }
 
   const getFallbackRecommendations = (data: FormData): ModelRecommendation[] => {
     const results: ModelRecommendation[] = []
     
-    // Simple fallback logic
+    // Task-based recommendations
     if (data.taskType === 'code') {
-      results.push({ name: 'Qwen 2.5 72B', reason: 'Excellent code generation capabilities', tags: ['Code', 'Large'], contextWindow: '128K', costPer1M: 8.00 })
+      if (data.accuracy === 'high') {
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Excellent code generation with strong reasoning capabilities', tags: ['Code', 'Large', 'Accurate'], contextWindow: '128K', costPer1M: 8.00 })
+        results.push({ name: 'Yi 1.5 34B', reason: 'Large model with strong programming and logic skills', tags: ['Code', 'Large', 'Accurate'], contextWindow: '32K', costPer1M: 5.50 })
+      } else if (data.speed === 'high') {
+        results.push({ name: 'Phi 3 Mini 4K', reason: 'Fast small model for quick code completion', tags: ['Code', 'Fast', 'Small'], contextWindow: '4K', costPer1M: 0.15 })
+        results.push({ name: 'Qwen 3 4B', reason: 'Efficient model optimized for coding tasks', tags: ['Code', 'Fast', 'Efficient'], contextWindow: '32K', costPer1M: 0.40 })
+      } else {
+        results.push({ name: 'Mistral 7B OpenOrca', reason: 'Well-balanced model with good coding capabilities', tags: ['Code', 'Balanced', 'Instruct'], contextWindow: '32K', costPer1M: 0.60 })
+        results.push({ name: 'Gemma 7B Instruct', reason: 'Instruction-tuned model suitable for code generation', tags: ['Code', 'Balanced', 'Instruct'], contextWindow: '8K', costPer1M: 0.70 })
+      }
     } else if (data.taskType === 'summarization') {
-      results.push({ name: 'BART Large CNN SamSum', reason: 'Specialized for summarization tasks', tags: ['Summarization'], contextWindow: '4K', costPer1M: 1.20 })
+      results.push({ name: 'BART Large CNN SamSum', reason: 'Specialized summarization model trained on conversation data', tags: ['Specialized', 'Summarization'], contextWindow: '4K', costPer1M: 1.20 })
+      results.push({ name: 'DistilBART CNN 12-6', reason: 'Efficient distilled model for news summarization', tags: ['Fast', 'Efficient'], contextWindow: '4K', costPer1M: 0.80 })
+      if (data.speed === 'high') {
+        results.push({ name: 'DistilBART CNN 6-6', reason: 'Fastest summarization model for quick processing', tags: ['Fast', 'Small'], contextWindow: '4K', costPer1M: 0.60 })
+      } else {
+        results.push({ name: 'Flan-T5 Large', reason: 'Instruction-tuned model good for summarization', tags: ['Balanced', 'Instruct'], contextWindow: '8K', costPer1M: 1.00 })
+      }
+    } else if (data.taskType === 'generation') {
+      if (data.modelSize === 'small' && data.speed === 'high') {
+        results.push({ name: 'Phi 3.5 Mini', reason: 'Ultra-fast small model optimized for quick text generation', tags: ['Fast', 'Small'], contextWindow: '128K', costPer1M: 0.15 })
+        results.push({ name: 'Mistral Lite', reason: 'Lightweight Mistral variant for rapid generation', tags: ['Fast', 'Efficient'], contextWindow: '32K', costPer1M: 0.20 })
+      } else if (data.accuracy === 'high') {
+        results.push({ name: 'Qwen 2.5 72B', reason: 'Highest accuracy for complex text generation tasks', tags: ['Accurate', 'Large'], contextWindow: '128K', costPer1M: 8.00 })
+        results.push({ name: 'Gemma 2 27B Instruct', reason: 'Google\'s large instruction-tuned model', tags: ['Accurate', 'Premium'], contextWindow: '8K', costPer1M: 4.50 })
+      } else {
+        results.push({ name: 'Gemma 7B Instruct', reason: 'Balanced performance for general text generation', tags: ['Recommended', 'Balanced'], contextWindow: '8K', costPer1M: 0.70 })
+        results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality 7B model with strong instruction following', tags: ['Balanced', 'Instruct'], contextWindow: '32K', costPer1M: 0.60 })
+      }
     } else {
-      results.push({ name: 'Gemma 7B Instruct', reason: 'Well-balanced model for general use', tags: ['Balanced'], contextWindow: '8K', costPer1M: 0.70 })
+      // Default recommendations
+      results.push({ name: 'Gemma 7B Instruct', reason: 'Well-balanced model for general use', tags: ['Balanced', 'Recommended'], contextWindow: '8K', costPer1M: 0.70 })
+      results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality instruction-following model', tags: ['Instruct', 'Balanced'], contextWindow: '32K', costPer1M: 0.60 })
+      results.push({ name: 'Phi 3.5 Mini', reason: 'Fast and efficient small model', tags: ['Fast', 'Small'], contextWindow: '128K', costPer1M: 0.15 })
     }
     
-    results.push({ name: 'Mistral 7B OpenOrca', reason: 'High-quality instruction-following model', tags: ['Instruct'], contextWindow: '32K', costPer1M: 0.60 })
-    results.push({ name: 'Phi 3.5 Mini', reason: 'Fast and efficient small model', tags: ['Fast', 'Small'], contextWindow: '128K', costPer1M: 0.15 })
+    // Add monthly cost calculation
+    if (data.monthlyUsage) {
+      const tokensPerMonth = parseInt(data.monthlyUsage) * 1000000
+      results.forEach(rec => {
+        rec.monthlyCost = (rec.costPer1M * tokensPerMonth) / 1000000
+      })
+    }
     
     return results.slice(0, 3)
   }
