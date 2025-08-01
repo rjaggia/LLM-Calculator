@@ -167,13 +167,13 @@ export default function Home() {
   
   const [recommendations, setRecommendations] = useState<ModelRecommendation[]>([])
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const recs = await getRecommendations(formData)
+    const recs = getRecommendations(formData)
     setRecommendations(recs)
   }
 
-  const getRecommendations = async (data: FormData): Promise<ModelRecommendation[]> => {
+  const getRecommendations = (data: FormData): ModelRecommendation[] => {
     return getFallbackRecommendations(data);
   }
 
